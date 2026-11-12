@@ -11,4 +11,11 @@ export const secondaryButton =
 export const textInput =
   'min-h-12 w-full rounded-lg border border-stone-500 bg-white px-3 text-base'
 
-export const card = 'rounded-2xl bg-white p-5 shadow-sm ring-1 ring-stone-200'
+// Onboarding buttons, matching the Figma wireframes (52px tall, 14px radius).
+export const onboardingPrimary =
+  'flex h-[52px] w-full shrink-0 items-center justify-center rounded-[14px] bg-ink text-base font-bold text-white hover:bg-stone-700'
+
+export const onboardingOutline =
+  'flex h-[52px] w-full shrink-0 items-center justify-center rounded-[14px] border-[1.5px] border-ink bg-white text-base font-bold text-ink hover:bg-fog'
+
+export const card ='rounded-2xl bg-white p-5 shadow-sm ring-1 ring-stone-200'

@@ -6,9 +6,21 @@ import { useEffect, useRef, useState } from 'react'
 // A real route like "/closet-map/log" would ask the server for a page that
 // doesn't exist and show a 404.
 
-export type Route = 'home' | 'log' | 'closet' | 'heatmap'
+export type Route =
+  | 'home'
+  | 'log'
+  | 'closet'
+  | 'heatmap'
+  // Onboarding: full-screen, no nav bar.
+  | 'welcome'
+  | 'how'
+  | 'photo'
+  | 'confirm'
+  | 'demo'
 
-const ROUTES: Route[] = ['home', 'log', 'closet', 'heatmap']
+const ROUTES: Route[] = ['home', 'log', 'closet', 'heatmap', 'welcome', 'how', 'photo', 'confirm', 'demo']
+
+export const ONBOARDING_ROUTES: Route[] = ['welcome', 'how', 'photo', 'confirm']
 
 // "#/closet" -> "closet". Anything unknown falls back to home.
 function readRoute(): Route {

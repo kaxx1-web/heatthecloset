@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+/* Design tokens from the Figma wireframes. Tailwind turns each one into
+   classes automatically, e.g. --color-ink gives bg-ink, text-ink, border-ink. */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #111111; /* main text, primary buttons */
+  --color-ink-soft: #444444; /* body text */
+  --color-fog: #f2f2f2; /* light grey tiles */
+  --color-peach: #fdebd8;
+  --color-apricot: #f8c79a;
+  --color-rust: #c4561e;
+  --color-night: #161616; /* camera screen background */
+  --color-paper: #f1f0ec; /* text on the camera screen */
+  --color-ash: #cfcfcb; /* secondary text on the camera screen */
+}
+
 :root {
   color-scheme: light;
 }
@@ -8,6 +24,10 @@ body {
   /* Tailwind exposes its palette as CSS variables like --color-stone-50. */
   background: var(--color-stone-50);
   color: var(--color-stone-900);
+  /* While Inter loads, scale the fallback font to Inter's letter height,
+     so text doesn't jump when the font swaps in. Browsers that don't
+     support this just skip it. */
+  font-size-adjust: from-font;
 }
 
 /* A clear, consistent focus ring for keyboard users on every control. */
@@ -20,4 +40,15 @@ body {
    changes. They aren't interactive, so they don't need a ring. */
 [tabindex="-1"]:focus {
   outline: none;
+}
+
+/* Stop scrolling inside or over a modal dialog from scrolling the page
+   behind it. */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background: rgb(0 0 0 / 0.45);
 }
