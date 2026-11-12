@@ -8,11 +8,11 @@ type Props = {
 }
 
 // Reached at #/demo. The welcome design has no spot for demo mode, so it
-// lives here (and on the Today screen) for testing.
+// lives here (and under Profile → Demo mode) for testing.
 export default function DemoScreen({ hasData, onLoadDemo }: Props) {
   return (
     <div className="flex flex-1 flex-col gap-6 bg-white px-6 pt-12 pb-7">
-      <a href={routeHref('welcome')} className="self-start font-medium underline underline-offset-4">
+      <a href={routeHref('welcome')} className="inline-flex min-h-11 items-center self-start font-medium underline underline-offset-4">
         Back to welcome
       </a>
       <h1 tabIndex={-1} className="text-[30px] leading-[1.15] font-extrabold text-ink">

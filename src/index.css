@@ -3,7 +3,7 @@
 /* Design tokens from the Figma wireframes. Tailwind turns each one into
    classes automatically, e.g. --color-ink gives bg-ink, text-ink, border-ink. */
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
 
   --color-ink: #111111; /* main text, primary buttons */
   --color-ink-soft: #444444; /* body text */
@@ -20,26 +20,39 @@
   color-scheme: light;
 }
 
-body {
-  /* Tailwind exposes its palette as CSS variables like --color-stone-50. */
-  background: var(--color-stone-50);
-  color: var(--color-stone-900);
-  /* While Inter loads, scale the fallback font to Inter's letter height,
-     so text doesn't jump when the font swaps in. Browsers that don't
-     support this just skip it. */
-  font-size-adjust: from-font;
-}
+/* These rules live in Tailwind's "base" layer, so Tailwind classes on a
+   component (like outline-none) can still override them. Rules outside a
+   layer would beat every Tailwind class, whatever its specificity. */
+@layer base {
+  body {
+    /* White like the screens, so the strips beside the 430px-wide app on
+       wider phones blend in. */
+    background: white;
+    color: var(--color-ink);
+    /* While Manrope loads, scale the fallback font to its letter height,
+       so text doesn't jump when the font swaps in. Browsers that don't
+       support this just skip it. */
+    font-size-adjust: from-font;
+  }
 
-/* A clear, consistent focus ring for keyboard users on every control. */
-:focus-visible {
-  outline: 3px solid var(--color-blue-700);
-  outline-offset: 2px;
-}
+  /* The camera screen is dark, so its side strips should be too. :has()
+     lets the page react to what's inside it. */
+  body:has([data-dark-screen]) {
+    background: var(--color-night);
+  }
 
-/* Headings get tabindex="-1" only so we can move focus to them on screen
-   changes. They aren't interactive, so they don't need a ring. */
-[tabindex="-1"]:focus {
-  outline: none;
+  /* A clear, consistent focus ring for keyboard users on every control.
+     Dark screens set --focus-ring to a lighter blue so it stays visible. */
+  :focus-visible {
+    outline: 3px solid var(--focus-ring, var(--color-blue-700));
+    outline-offset: 2px;
+  }
+
+  /* Headings get tabindex="-1" only so we can move focus to them on screen
+     changes. They aren't interactive, so they don't need a ring. */
+  [tabindex="-1"]:focus {
+    outline: none;
+  }
 }
 
 /* Stop scrolling inside or over a modal dialog from scrolling the page

@@ -137,7 +137,7 @@ export default function HomeScreen({ data, profile, today }: Props) {
           </ul>
         )}
         {data.pieces.length > CLOSET_PREVIEW && (
-          <a href={routeHref('closet')} className="self-start text-sm font-semibold text-ink underline underline-offset-4">
+          <a href={routeHref('closet')} className="inline-flex min-h-11 items-center self-start text-sm font-semibold text-ink underline underline-offset-4">
             See all {data.pieces.length} pieces
           </a>
         )}
@@ -148,7 +148,7 @@ export default function HomeScreen({ data, profile, today }: Props) {
             <p className="flex-1 text-sm leading-[1.4] text-ink-soft">Your heat map unlocks on day 30.</p>
           </div>
         ) : (
-          <a href={routeHref('heatmap')} className="text-sm font-semibold text-ink underline underline-offset-4">
+          <a href={routeHref('heatmap')} className="flex min-h-11 items-center text-sm font-semibold text-ink underline underline-offset-4">
             Your heat map is ready. Take a look.
           </a>
         )}

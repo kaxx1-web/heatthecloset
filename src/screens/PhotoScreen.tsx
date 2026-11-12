@@ -110,7 +110,7 @@ export default function PhotoScreen({ day, firstDay, onPhoto }: Props) {
   const shutterLabel = mode === 'live' ? 'Take photo' : 'Open camera'
 
   return (
-    <div className="flex flex-1 flex-col gap-4 bg-night px-6 pt-[52px] pb-6">
+    <div data-dark-screen className="flex flex-1 flex-col gap-4 bg-night px-6 pt-[52px] pb-6 [--focus-ring:var(--color-blue-400)]">
       <div className="flex items-center justify-between">
         {firstDay ? <StepDots active={2} dark /> : <span />}
         <p className="text-sm leading-[1.4] font-semibold text-ash">

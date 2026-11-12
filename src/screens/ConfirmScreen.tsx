@@ -120,7 +120,7 @@ export default function ConfirmScreen({ data, profile, today, day, photoUrl, onC
                     enterKeyHint="next"
                     spellCheck
                     aria-describedby={`${row.key}-suggestions`}
-                    className="h-10 w-full min-w-0 rounded-[10px] border-[1.5px] border-[#d6d6d6] bg-white px-2.5 text-base font-medium text-ink placeholder:font-normal placeholder:text-stone-400"
+                    className="h-10 w-full min-w-0 rounded-[10px] border-[1.5px] border-[#d6d6d6] bg-white px-2.5 text-base font-medium text-ink placeholder:font-normal placeholder:text-stone-500"
                   />
                 </div>
 

@@ -94,7 +94,7 @@ export default function AddPieceSheet({ dialogRef, existingNames, onAdd }: Props
             spellCheck
             aria-invalid={error ? true : undefined}
             aria-describedby="add-piece-error add-piece-suggestions"
-            className="h-12 rounded-xl border-[1.5px] border-[#d6d6d6] px-3.5 text-base font-medium placeholder:font-normal placeholder:text-stone-400"
+            className="h-12 rounded-xl border-[1.5px] border-[#d6d6d6] px-3.5 text-base font-medium placeholder:font-normal placeholder:text-stone-500"
           />
           <SpellingSuggestions
             id="add-piece-suggestions"
