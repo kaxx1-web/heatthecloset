@@ -83,3 +83,34 @@ export function saveLog(
   const otherDays = data.logs.filter((log) => log.date !== date)
   return { ...data, logs: [...otherDays, { date, pieceIds }] }
 }
+
+// "Mark as worn today": adds the piece to today's log, creating the log if
+// today has none yet.
+export function markWornToday(data: ClosetData, pieceId: string, today: ISODate = todayISO()): ClosetData {
+  const todaysLog = data.logs.find((log) => log.date === today)
+  const ids = todaysLog ? todaysLog.pieceIds : []
+  if (ids.includes(pieceId)) return data
+  return saveLog(data, today, [...ids, pieceId])
+}
+
+// "Wear it this week": saves a fresh plan starting today (replacing any
+// older plan for the same piece).
+export function planThisWeek(data: ClosetData, pieceId: string, today: ISODate = todayISO()): ClosetData {
+  const others = (data.plans ?? []).filter((plan) => plan.pieceId !== pieceId)
+  return { ...data, plans: [...others, { pieceId, addedOn: today }] }
+}
+
+export function cancelPlan(data: ClosetData, pieceId: string): ClosetData {
+  return { ...data, plans: (data.plans ?? []).filter((plan) => plan.pieceId !== pieceId) }
+}
+
+// "Let it go": deletes the piece, takes it out of every log, and drops any
+// plan for it. The logs themselves stay, so the days still count as logged.
+export function removePiece(data: ClosetData, pieceId: string): ClosetData {
+  return {
+    ...data,
+    pieces: data.pieces.filter((piece) => piece.id !== pieceId),
+    logs: data.logs.map((log) => ({ ...log, pieceIds: log.pieceIds.filter((id) => id !== pieceId) })),
+    plans: (data.plans ?? []).filter((plan) => plan.pieceId !== pieceId),
+  }
+}

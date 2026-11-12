@@ -37,11 +37,21 @@ export type Profile = {
   startDate: ISODate // Day 1 of the 30-day challenge
 }
 
+// "Wear it this week": a reminder shown on Home for 7 days, or until the
+// piece is worn.
+export type Plan = {
+  pieceId: string
+  addedOn: ISODate
+}
+
 // Everything the app saves, kept together under one localStorage key.
 export type ClosetData = {
   profile: Profile | null // null until the user finishes setup
   pieces: Piece[]
   logs: Log[]
+  // Optional (?) because data saved before this feature doesn't have it.
+  // Read it as `data.plans ?? []`.
+  plans?: Plan[]
 }
 
 // The three colors on the heat map:

@@ -1,7 +1,11 @@
-import { card } from '../components/ui'
-import { formatShortDate } from '../data/dates'
-import { CHALLENGE_DAYS, dayNumber, heatLevel, lastWorn, timesWorn } from '../data/stats'
-import type { ClosetData, HeatLevel, ISODate, Profile } from '../data/types'
+import lockIcon from '../assets/figma/lock.svg'
+import GarmentIcon from '../components/GarmentIcon'
+import HeatBar from '../components/HeatBar'
+import { CATEGORY_PLURALS, HEAT, HEAT_ORDER, countLevels, piecesByHeat } from '../components/heat'
+import { CHALLENGE_DAYS, dayNumber } from '../data/stats'
+import { CATEGORIES } from '../data/types'
+import type { ClosetData, ISODate, Profile } from '../data/types'
+import { routeHref } from '../navigation'
 
 type Props = {
   data: ClosetData
@@ -9,80 +13,94 @@ type Props = {
   today: ISODate
 }
 
-// Cold comes first because unworn pieces are the point of the heat map.
-// Every group has a text heading, so the colors are never the only clue
-// (important for color-blind users and screen readers).
-const GROUPS: { level: HeatLevel; title: string; tile: string }[] = [
-  { level: 'cold', title: 'Not worn in 30 days', tile: 'bg-sky-100 ring-sky-300 text-sky-950' },
-  { level: 'warm', title: 'Worn once or twice', tile: 'bg-amber-100 ring-amber-300 text-amber-950' },
-  { level: 'hot', title: 'Worn 3+ times', tile: 'bg-rose-200 ring-rose-400 text-rose-950' },
-]
-
+// Figma: "11 Heat map". Counts the pieces saved in your closet.
 export default function HeatMapScreen({ data, profile, today }: Props) {
   const day = dayNumber(profile.startDate, today)
 
   if (day < CHALLENGE_DAYS) {
     const left = CHALLENGE_DAYS - day
     return (
-      <div className="space-y-6">
-        <h1 tabIndex={-1} className="text-3xl font-extrabold">
+      <div className="flex flex-col gap-[18px] px-5 pt-[52px] pb-4">
+        <h1 tabIndex={-1} className="text-[28px] leading-[1.15] font-extrabold text-ink">
           Heat map
         </h1>
-        <div className={`${card} space-y-2`}>
-          <p className="text-lg font-semibold">
-            Unlocks on day {CHALLENGE_DAYS}, {left} {left === 1 ? 'day' : 'days'} to go.
-          </p>
-          <p className="text-stone-700">Keep logging every day so the map is accurate.</p>
+        <div className="flex items-start gap-3 rounded-[18px] border-[1.5px] border-[#e0e0e0] p-4">
+          <img src={lockIcon} width={20} height={20} alt="" className="mt-0.5" />
+          <div className="flex flex-1 flex-col gap-1 leading-[1.4]">
+            <p className="font-bold text-ink">Your heat map unlocks on day {CHALLENGE_DAYS}.</p>
+            <p className="text-sm text-ink-soft">
+              {left} {left === 1 ? 'day' : 'days'} to go. Keep logging every day so the map is
+              accurate.
+            </p>
+          </div>
         </div>
       </div>
     )
   }
 
-  const withLevel = data.pieces.map((piece) => ({
-    piece,
-    level: heatLevel(data.logs, piece.id, today),
-    count: timesWorn(data.logs, piece.id, CHALLENGE_DAYS, today),
-    last: lastWorn(data.logs, piece.id),
-  }))
-  const coldCount = withLevel.filter((p) => p.level === 'cold').length
+  // One card per category that has pieces, the most "not worn" first.
+  const groups = CATEGORIES.map((category) => {
+    const items = piecesByHeat(
+      data.pieces.filter((p) => p.category === category),
+      data.logs,
+      today,
+    )
+    return { category, total: items.length, counts: countLevels(items) }
+  })
+    .filter((group) => group.total > 0)
+    .sort((a, b) => b.counts.cold / b.total - a.counts.cold / a.total || b.total - a.total)
+
+  const notWorn = groups.reduce((sum, g) => sum + g.counts.cold, 0)
 
   return (
-    <div className="space-y-6">
-      <header className="space-y-1">
-        <h1 tabIndex={-1} className="text-3xl font-extrabold">
-          Your closet heat map
-        </h1>
-        <p className="text-lg text-stone-700">
-          {coldCount} of {data.pieces.length} pieces weren’t worn in the last 30 days.
+    <div className="flex flex-col gap-4 px-5 pt-[52px] pb-4">
+      <h1 tabIndex={-1} className="text-[28px] leading-[1.15] font-extrabold text-ink">
+        Closet heat
+      </h1>
+      <div className="flex flex-col gap-0.5 leading-[1.4] text-ink-soft">
+        <p className="text-base">
+          {notWorn} of {data.pieces.length} logged pieces not worn in the last 30 days
         </p>
-      </header>
+        <p className="text-[13px]">Pieces show up here once you’ve logged them</p>
+      </div>
 
-      {GROUPS.map(({ level, title, tile }) => {
-        const items = withLevel.filter((p) => p.level === level)
-        if (items.length === 0) return null
-        return (
-          <section key={level} aria-labelledby={`heat-${level}`} className="space-y-2">
-            <h2 id={`heat-${level}`} className="text-lg font-bold">
-              {title} ({items.length})
-            </h2>
-            <ul className="grid grid-cols-2 gap-2">
-              {items.map(({ piece, count, last }) => (
-                <li key={piece.id} className={`rounded-xl p-3 ring-1 ${tile}`}>
-                  <span className="block font-semibold">{piece.name}</span>
-                  <span className="block text-sm">{piece.category}</span>
-                  <span className="mt-1 block text-sm">
-                    {count > 0
-                      ? `${count}× · last ${formatShortDate(last!)}`
-                      : last
-                        ? `Last worn ${formatShortDate(last)}`
-                        : 'Never logged'}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )
-      })}
+      {/* Legend: a list, so screen readers say "list, 3 items". */}
+      <ul className="flex flex-wrap gap-x-4 gap-y-1">
+        {HEAT_ORDER.map((level) => (
+          <li key={level} className="flex items-center gap-1.5 text-[13px] leading-[1.4] text-ink">
+            <span aria-hidden="true" className={`size-3.5 rounded border border-[#d9d9d9] ${HEAT[level].bg}`} />
+            {HEAT[level].label}
+          </li>
+        ))}
+      </ul>
+
+      {data.pieces.length === 0 ? (
+        <p className="text-sm text-ink-soft">No pieces yet. Tap + to log an outfit.</p>
+      ) : (
+        // odd:last:col-span-2 = if the last card is alone in its row,
+        // stretch it across both columns (like "Bottoms" in Figma).
+        <ul className="grid grid-cols-2 gap-2.5">
+          {groups.map(({ category, total, counts }) => (
+            <li key={category} className="odd:last:col-span-2">
+              <a
+                href={routeHref('heatmap', category)}
+                className="flex h-full flex-col gap-2.5 rounded-2xl border-[1.5px] border-[#e0e0e0] p-3 hover:bg-[#fafafa]"
+              >
+                <div className="flex items-center gap-2">
+                  <GarmentIcon category={category} size={30} slot="heat" />
+                  <div className="flex min-w-0 flex-1 flex-col leading-[1.4]">
+                    <span className="text-[15px] font-bold text-ink">{CATEGORY_PLURALS[category]}</span>
+                    <span className="text-[13px] text-ink-soft">
+                      {counts.cold} of {total} not worn
+                    </span>
+                  </div>
+                </div>
+                <HeatBar counts={counts} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }

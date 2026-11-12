@@ -7,6 +7,9 @@ import { routeHref } from '../navigation'
 
 type Props = {
   day: number
+  // true until day 1 is saved: shows the onboarding dots and "This starts
+  // your 30 days". The "+" tab reuses this screen on later days.
+  firstDay: boolean
   onPhoto: (photo: Blob) => void
 }
 
@@ -19,7 +22,7 @@ type Mode = 'intro' | 'starting' | 'live' | 'error'
 // Figma: "04 Day 1: photo of your outfit"
 // Two ways to add a photo: take one with the camera, or upload one.
 // Either way, the photo is only kept in memory and is never saved.
-export default function PhotoScreen({ day, onPhoto }: Props) {
+export default function PhotoScreen({ day, firstDay, onPhoto }: Props) {
   const [mode, setMode] = useState<Mode>('intro')
   const videoRef = useRef<HTMLVideoElement>(null)
   const streamRef = useRef<MediaStream | null>(null)
@@ -109,7 +112,7 @@ export default function PhotoScreen({ day, onPhoto }: Props) {
   return (
     <div className="flex flex-1 flex-col gap-4 bg-night px-6 pt-[52px] pb-6">
       <div className="flex items-center justify-between">
-        <StepDots active={2} dark />
+        {firstDay ? <StepDots active={2} dark /> : <span />}
         <p className="text-sm leading-[1.4] font-semibold text-ash">
           Day {day} of {CHALLENGE_DAYS}
         </p>
@@ -119,7 +122,7 @@ export default function PhotoScreen({ day, onPhoto }: Props) {
         Take a photo of your outfit right now
       </h1>
       <p className="text-[15px] leading-[1.4] text-ash">
-        Mirror selfies work. This starts your 30 days.
+        {firstDay ? 'Mirror selfies work. This starts your 30 days.' : 'Mirror selfies work.'}
       </p>
 
       {/* The viewfinder: the Figma figure until the camera is on. */}

@@ -40,14 +40,17 @@ const WEEKLY_OUTFITS: string[][] = [
   ['striped-shirt', 'jeans', 'loafers', 'crossbody'],
 ]
 
-// A few one-off changes so the heat map shows all three colors.
-// Day 10 swaps in the silk blouse, so it's "worn once or twice".
-// Days 21 and 26 add the belt, so it's warm at day 30 but unused at day 12.
-// Coat, skirt and heels are never worn, so they show as cold.
+// A few one-off changes so the heat map shows all three colors, and
+// Profile has some "forgotten pieces worn again" (14+ days unworn):
+// - Days 10 and 27: the silk blouse (warm; rediscovered on day 27).
+// - Days 21 and 26: the belt (warm at day 30; rediscovered on day 21).
+// - Day 25: the wool coat (warm; rediscovered after 24 days).
+// - Skirt and heels are never worn, so they show as cold.
 function outfitForDay(dayIndex: number): string[] {
   const outfit = [...WEEKLY_OUTFITS[dayIndex % WEEKLY_OUTFITS.length]]
-  if (dayIndex === 9) outfit[0] = 'silk-blouse'
+  if (dayIndex === 9 || dayIndex === 26) outfit[0] = 'silk-blouse'
   if (dayIndex === 20 || dayIndex === 25) outfit.push('belt')
+  if (dayIndex === 24) outfit.push('wool-coat')
   return outfit.map((name) => `demo-${name}`)
 }
 

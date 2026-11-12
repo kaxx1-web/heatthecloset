@@ -44,6 +44,25 @@ export function formatShortDate(date: ISODate): string {
   return shortDate.format(dayIndex(date) * MS_PER_DAY)
 }
 
+// e.g. "Thursday, Oct 29", for the Home header.
+const longDate = new Intl.DateTimeFormat(undefined, {
+  weekday: 'long',
+  month: 'short',
+  day: 'numeric',
+  timeZone: 'UTC',
+})
+export function formatLongDate(date: ISODate): string {
+  return longDate.format(dayIndex(date) * MS_PER_DAY)
+}
+
+// "today", "yesterday" or "9 days ago".
+export function formatDaysAgo(date: ISODate, today: ISODate): string {
+  const days = daysBetween(date, today)
+  if (days <= 0) return 'today'
+  if (days === 1) return 'yesterday'
+  return `${days} days ago`
+}
+
 // Example: addDays('2026-11-30', 1) === '2026-12-01'. Pass a negative
 // number to go back in time.
 export function addDays(date: ISODate, days: number): ISODate {
