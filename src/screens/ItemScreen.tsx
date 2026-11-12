@@ -62,7 +62,7 @@ export default function ItemScreen({ data, piece, today, onChange }: Props) {
   const timesLabel = ever === 0 ? 'Never' : timesPhrase(ever).replace(/^./, (c) => c.toUpperCase())
 
   return (
-    <div className="flex flex-1 flex-col gap-3.5 bg-white px-5 pt-11 pb-6">
+    <div className="flex flex-1 flex-col gap-3.5 px-5 pt-11 pb-6">
       <BackLink href={backHref} label="Back" historyBack />
 
       <div className={`flex h-40 shrink-0 items-center justify-center rounded-[20px] ${HEAT[level].bg}`}>
@@ -80,11 +80,11 @@ export default function ItemScreen({ data, piece, today, onChange }: Props) {
 
       {/* <dl> pairs each label with its value for screen readers. */}
       <dl className="flex gap-2 leading-[1.4]">
-        <div className="flex flex-1 flex-col gap-0.5 rounded-[14px] border-[1.5px] border-[#e0e0e0] p-3">
+        <div className="surface flex flex-1 flex-col gap-0.5 rounded-[14px] border-[1.5px] border-[#e0e0e0] p-3">
           <dt className="text-[13px] text-ink-soft">Last worn</dt>
           <dd className="text-[17px] font-bold text-ink">{last ? formatShortDate(last) : 'Not yet'}</dd>
         </div>
-        <div className="flex flex-1 flex-col gap-0.5 rounded-[14px] border-[1.5px] border-[#e0e0e0] p-3">
+        <div className="surface flex flex-1 flex-col gap-0.5 rounded-[14px] border-[1.5px] border-[#e0e0e0] p-3">
           <dt className="text-[13px] text-ink-soft">Times worn</dt>
           <dd className="text-[17px] font-bold text-ink">{timesLabel}</dd>
         </div>

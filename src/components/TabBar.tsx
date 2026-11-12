@@ -55,7 +55,7 @@ export default function TabBar({ current }: { current: Route }) {
   return (
     <nav
       aria-label="Main"
-      className="fixed inset-x-0 bottom-0 z-10 mx-auto max-w-[430px] border-t border-[#e3e3e3] bg-white"
+      className="surface fixed inset-x-0 bottom-0 z-10 mx-auto max-w-[430px] border-t border-[#e3e3e3]"
     >
       <ul className="flex h-[76px] items-center px-2 pb-3">
         {LEFT.map((tab) => (

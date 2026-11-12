@@ -28,7 +28,7 @@ export default function DemoTools({ hasData, onLoadDemo, onReset }: Props) {
       <h2 id="demo-heading" className="text-lg font-bold">
         Demo mode
       </h2>
-      <p className="text-stone-600">
+      <p className="text-ink-soft">
         Load a sample closet that’s already partway through the challenge.
       </p>
       <div className="grid grid-cols-2 gap-3">

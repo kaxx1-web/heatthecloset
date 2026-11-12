@@ -21,7 +21,7 @@ export default function LoggedScreen({ data, log, today, day }: Props) {
   const pieces = log.pieceIds.map((id) => data.pieces.find((p) => p.id === id)).filter((p) => p !== undefined)
 
   return (
-    <div className="flex flex-1 flex-col gap-4 bg-white px-5 pt-[52px] pb-7">
+    <div className="flex flex-1 flex-col gap-4 px-5 pt-[52px] pb-7">
       <div className="flex flex-col items-center gap-3 pt-9 text-center">
         <div className="flex size-[72px] items-center justify-center rounded-full bg-ink">
           <img src={checkIcon} width={36} height={36} alt="" />
@@ -34,7 +34,7 @@ export default function LoggedScreen({ data, log, today, day }: Props) {
         </p>
       </div>
 
-      <ul className="flex flex-col gap-1 rounded-2xl border-[1.5px] border-[#e0e0e0] px-3.5 py-1.5">
+      <ul className="surface flex flex-col gap-1 rounded-2xl border-[1.5px] border-[#e0e0e0] px-3.5 py-1.5">
         {pieces.map((piece) => (
           <li key={piece.id} className="flex items-center gap-3 py-1">
             <div className="flex size-12 shrink-0 items-center justify-center rounded-[10px] bg-peach">
@@ -51,7 +51,7 @@ export default function LoggedScreen({ data, log, today, day }: Props) {
         ))}
       </ul>
 
-      <div className="flex flex-col gap-2.5 rounded-2xl bg-[#f7f7f5] p-4">
+      <div className="surface flex flex-col gap-2.5 rounded-2xl p-4">
         <div className="flex items-center justify-between leading-[1.4]">
           <p className="font-bold text-ink">
             Day {day} of {CHALLENGE_DAYS} done

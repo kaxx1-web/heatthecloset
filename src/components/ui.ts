@@ -2,7 +2,7 @@
 // min-h-12 = 48px, a comfortable tap target on phones.
 
 export const secondaryButton =
-  'inline-flex min-h-12 w-full items-center justify-center rounded-xl border-2 border-stone-900 px-5 font-semibold text-stone-900 hover:bg-stone-100'
+  'inline-flex min-h-12 w-full items-center justify-center rounded-xl border-2 border-ink px-5 font-semibold text-ink hover:bg-ink/10'
 
 // Buttons matching the Figma wireframes (52px tall, 14px radius).
 export const onboardingPrimary =

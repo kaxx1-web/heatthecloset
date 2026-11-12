@@ -33,7 +33,7 @@ export default function HomeScreen({ data, profile, today }: Props) {
     <div className="flex flex-col gap-[18px] px-5 pt-[52px] pb-4">
       <header className="flex items-start">
         <div className="flex flex-1 flex-col gap-0.5">
-          <p className="text-sm leading-[1.4] text-[#595959]">{formatLongDate(today)}</p>
+          <p className="text-sm leading-[1.4] text-ink-soft">{formatLongDate(today)}</p>
           <h1 tabIndex={-1} className="text-[28px] leading-[1.15] font-extrabold text-ink">
             Hello, {profile.name}.
           </h1>
@@ -44,7 +44,7 @@ export default function HomeScreen({ data, profile, today }: Props) {
         </div>
       </header>
 
-      <section aria-labelledby="progress-title" className="flex flex-col gap-2.5 rounded-[18px] border-[1.5px] border-[#e0e0e0] p-4">
+      <section aria-labelledby="progress-title" className="surface flex flex-col gap-2.5 rounded-[18px] border-[1.5px] border-[#e0e0e0] p-4">
         <div className="flex items-center justify-between leading-[1.4]">
           <h2 id="progress-title" className="text-lg font-bold text-ink">
             Day {day} of {CHALLENGE_DAYS}
@@ -82,7 +82,7 @@ export default function HomeScreen({ data, profile, today }: Props) {
         </section>
       )}
 
-      <section aria-labelledby="suggested-title" className="flex flex-col gap-2.5 rounded-[18px] border-[1.5px] border-[#e0e0e0] p-4">
+      <section aria-labelledby="suggested-title" className="surface flex flex-col gap-2.5 rounded-[18px] border-[1.5px] border-[#e0e0e0] p-4">
         <div className="flex items-center justify-between leading-[1.4]">
           <h2 id="suggested-title" className="text-lg font-bold text-ink">
             Suggested outfit

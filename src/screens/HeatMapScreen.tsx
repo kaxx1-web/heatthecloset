@@ -24,7 +24,7 @@ export default function HeatMapScreen({ data, profile, today }: Props) {
         <h1 tabIndex={-1} className="text-[28px] leading-[1.15] font-extrabold text-ink">
           Heat map
         </h1>
-        <div className="flex items-start gap-3 rounded-[18px] border-[1.5px] border-[#e0e0e0] p-4">
+        <div className="surface flex items-start gap-3 rounded-[18px] border-[1.5px] border-[#e0e0e0] p-4">
           <img src={lockIcon} width={20} height={20} alt="" className="mt-0.5" />
           <div className="flex flex-1 flex-col gap-1 leading-[1.4]">
             <p className="font-bold text-ink">Your heat map unlocks on day {CHALLENGE_DAYS}.</p>
@@ -84,7 +84,7 @@ export default function HeatMapScreen({ data, profile, today }: Props) {
             <li key={category} className="odd:last:col-span-2">
               <a
                 href={routeHref('heatmap', category)}
-                className="flex h-full flex-col gap-2.5 rounded-2xl border-[1.5px] border-[#e0e0e0] p-3 hover:bg-[#fafafa]"
+                className="surface flex h-full flex-col gap-2.5 rounded-2xl border-[1.5px] border-[#e0e0e0] p-3 hover:bg-white"
               >
                 <div className="flex items-center gap-2">
                   <GarmentIcon category={category} size={30} slot="heat" />

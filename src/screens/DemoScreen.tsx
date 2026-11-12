@@ -11,7 +11,7 @@ type Props = {
 // lives here (and under Profile → Demo mode) for testing.
 export default function DemoScreen({ hasData, onLoadDemo }: Props) {
   return (
-    <div className="flex flex-1 flex-col gap-6 bg-white px-6 pt-12 pb-7">
+    <div className="flex flex-1 flex-col gap-6 px-6 pt-12 pb-7">
       <a href={routeHref('welcome')} className="inline-flex min-h-11 items-center self-start font-medium underline underline-offset-4">
         Back to welcome
       </a>

@@ -101,7 +101,7 @@ export default function ProfileScreen({ data, profile, today, onLoadDemo, onRese
         </div>
       </div>
 
-      <div className="flex items-center gap-4 rounded-2xl border-[1.5px] border-[#e0e0e0] p-3.5">
+      <div className="surface flex items-center gap-4 rounded-2xl border-[1.5px] border-[#e0e0e0] p-3.5">
         <Ring percent={percent} />
         <div className="flex min-w-0 flex-1 flex-col gap-0.5">
           <p className="text-[26px] leading-[1.15] font-bold text-ink">{percent}%</p>
@@ -136,7 +136,7 @@ export default function ProfileScreen({ data, profile, today, onLoadDemo, onRese
         )}
       </section>
 
-      <section aria-label="Settings" className="flex flex-col">
+      <section aria-label="Settings" className="surface flex flex-col rounded-2xl border-[1.5px] border-[#e0e0e0] px-3.5 [&>*:last-child]:border-b-0">
         {/* Not built yet, so these rows aren't buttons. */}
         <div className={rowClass}>
           <img src={imageIcon} width={22} height={22} alt="" />

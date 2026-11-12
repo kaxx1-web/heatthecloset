@@ -45,10 +45,11 @@ export default function App() {
   const { route, param } = useHashRoute()
   const today = todayISO()
 
-  // Today's photo lives only in memory, so the confirm screen can show it.
-  // It's never saved. When it's replaced or cleared, revokeObjectURL frees
-  // the memory.
-  const [photoUrl, setPhotoUrl] = useState<string | null>(null)
+  // Today's photo lives only in memory: the image itself (blob, for the
+  // on-device AI) and a temporary URL (for showing it). It's never saved or
+  // uploaded. When it's replaced or cleared, revokeObjectURL frees the memory.
+  const [photo, setPhoto] = useState<{ blob: Blob; url: string } | null>(null)
+  const photoUrl = photo?.url ?? null
   useEffect(() => {
     if (!photoUrl) return
     return () => URL.revokeObjectURL(photoUrl)
@@ -72,7 +73,7 @@ export default function App() {
 
   // Called by both confirm screens after saving today's log.
   function finishLogging() {
-    setPhotoUrl(null)
+    setPhoto(null)
     navigate('logged')
   }
 
@@ -112,7 +113,7 @@ export default function App() {
   // Full-screen steps: onboarding, taking a photo, confirming, "Outfit logged".
   if (!profile || FULL_SCREEN_ROUTES.includes(screen)) {
     return (
-      <main className="mx-auto flex min-h-dvh max-w-[430px] flex-col bg-white">
+      <main className="mx-auto flex min-h-dvh max-w-[430px] flex-col">
         {saveWarning}
         {screen === 'demo' ? (
           <DemoScreen hasData={profile !== null} onLoadDemo={loadDemo} />
@@ -130,8 +131,8 @@ export default function App() {
           <PhotoScreen
             day={day}
             firstDay={firstDay}
-            onPhoto={(photo) => {
-              setPhotoUrl(URL.createObjectURL(photo))
+            onPhoto={(blob) => {
+              setPhoto({ blob, url: URL.createObjectURL(blob) })
               navigate('confirm')
             }}
           />
@@ -142,7 +143,7 @@ export default function App() {
             profile={profile}
             today={today}
             day={day}
-            photoUrl={photoUrl}
+            photo={photo}
             onChange={update}
             onSaved={finishLogging}
           />
@@ -168,7 +169,7 @@ export default function App() {
   // Tabs: Home, Closet, Heat map, Profile, with the tab bar at the bottom.
   // pb-[92px] keeps the last content above the fixed 76px tab bar.
   return (
-    <div className="mx-auto min-h-dvh max-w-[430px] bg-white pb-[92px]">
+    <div className="mx-auto min-h-dvh max-w-[430px] pb-[92px]">
       {saveWarning}
       <main>
         {screen === 'closet' ? (

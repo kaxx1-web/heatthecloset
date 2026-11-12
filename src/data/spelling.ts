@@ -21,7 +21,7 @@ const BRANDS = [
 // patterns and colors.
 const WORDS = [
   // tops
-  't-shirt', 'tee', 'tank', 'top', 'blouse', 'shirt', 'button-down', 'polo', 'henley', 'sweater',
+  't-shirt', 'tee', 'tank', 'top', 'blouse', 'shirt', 'button-down', 'button-up', 'polo', 'henley', 'sweater',
   'cardigan', 'hoodie', 'sweatshirt', 'crewneck', 'turtleneck', 'pullover', 'vest', 'camisole',
   'cami', 'bodysuit', 'tunic', 'jersey', 'rugby', 'quarter-zip', 'half-zip', 'zip-up', 'jumper',
   // bottoms and one-pieces
@@ -59,7 +59,7 @@ const WORDS = [
   'striped', 'plaid', 'checked', 'gingham', 'houndstooth', 'argyle', 'paisley', 'herringbone',
   'floral', 'polka', 'dot', 'graphic', 'tie-dye', 'camo', 'leopard', 'zebra', 'animal',
   // colors
-  'black', 'white', 'grey', 'gray', 'navy', 'blue', 'red', 'green', 'olive', 'khaki', 'beige',
+  'light', 'dark', 'black', 'white', 'grey', 'gray', 'navy', 'blue', 'red', 'green', 'olive', 'khaki', 'beige',
   'cream', 'ivory', 'tan', 'brown', 'camel', 'burgundy', 'maroon', 'pink', 'blush', 'purple',
   'lavender', 'lilac', 'yellow', 'mustard', 'orange', 'rust', 'teal', 'turquoise', 'silver',
   'gold', 'charcoal', 'mint', 'coral', 'emerald', 'chocolate', 'oatmeal', 'ecru', 'taupe',

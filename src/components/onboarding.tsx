@@ -39,7 +39,7 @@ export function BackLink({ href, label, historyBack = false }: { href: string; l
       }}
       className="-ml-1 flex h-11 shrink-0 items-center gap-1 self-start rounded-lg pr-2 pl-1 text-[15px] font-medium text-ink"
     >
-      <img src={chevronLeft} width={22} height={22} alt="" />
+      <img src={chevronLeft} width={22} height={22} alt="" className="page-icon" />
       {label}
     </a>
   )
@@ -85,7 +85,7 @@ export function DashedAddButton({ label, onClick }: { label: string; onClick: ()
       onClick={onClick}
       className="flex h-12 shrink-0 items-center gap-2 rounded-[14px] border-[1.5px] border-dashed border-[#9a9a9a] px-3.5 text-[15px] font-semibold text-ink"
     >
-      <img src={plusIcon} width={20} height={20} alt="" />
+      <img src={plusIcon} width={20} height={20} alt="" className="page-icon" />
       {label}
     </button>
   )

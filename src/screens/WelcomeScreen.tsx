@@ -37,7 +37,7 @@ export default function WelcomeScreen({ onNameSaved }: Props) {
   }
 
   return (
-    <div className="flex flex-1 flex-col gap-4 bg-white px-6 pt-12 pb-7">
+    <div className="flex flex-1 flex-col gap-4 px-6 pt-12 pb-7">
       {/* Decorative garment tiles: hidden from screen readers. */}
       <div aria-hidden="true" className="grid grid-cols-3 gap-2.5 pt-5 pb-2">
         {TILES.map(({ icon, bg }, i) => (

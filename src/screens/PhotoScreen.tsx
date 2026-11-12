@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { ChangeEvent } from 'react'
+import { preloadClothingModel } from '../ai/identify'
 import figureIcon from '../assets/figma/photo-figure.svg'
 import { StepDots } from '../components/onboarding'
 import { CHALLENGE_DAYS } from '../data/stats'
@@ -33,6 +34,12 @@ export default function PhotoScreen({ day, firstDay, onPhoto }: Props) {
     streamRef.current?.getTracks().forEach((track) => track.stop())
     streamRef.current = null
   }
+
+  // Day 1: start downloading the outfit AI now, while you take the photo,
+  // so it's ready on the next screen. (Later days don't use it.)
+  useEffect(() => {
+    if (firstDay) preloadClothingModel()
+  }, [firstDay])
 
   // Turn the camera off when the user leaves this screen.
   useEffect(() => {
@@ -110,7 +117,7 @@ export default function PhotoScreen({ day, firstDay, onPhoto }: Props) {
   const shutterLabel = mode === 'live' ? 'Take photo' : 'Open camera'
 
   return (
-    <div data-dark-screen className="flex flex-1 flex-col gap-4 bg-night px-6 pt-[52px] pb-6 [--focus-ring:var(--color-blue-400)]">
+    <div data-dark-screen className="flex flex-1 flex-col gap-4 bg-night px-6 pt-[52px] pb-6">
       <div className="flex items-center justify-between">
         {firstDay ? <StepDots active={2} dark /> : <span />}
         <p className="text-sm leading-[1.4] font-semibold text-ash">

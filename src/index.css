@@ -35,17 +35,25 @@
     font-size-adjust: from-font;
   }
 
+  /* When the browser scrolls something into view (keyboard focus, links),
+     keep it clear of the fixed 76px tab bar instead of hidden behind it. */
+  html {
+    scroll-padding-bottom: 96px;
+  }
+
   /* The camera screen is dark, so its side strips should be too. :has()
      lets the page react to what's inside it. */
   body:has([data-dark-screen]) {
     background: var(--color-night);
   }
 
-  /* A clear, consistent focus ring for keyboard users on every control.
-     Dark screens set --focus-ring to a lighter blue so it stays visible. */
+  /* A clear focus ring for keyboard users on every control. It's two-tone
+     (a white band inside a dark line), so it shows up on the dark
+     background and on white cards alike. */
   :focus-visible {
-    outline: 3px solid var(--focus-ring, var(--color-blue-700));
-    outline-offset: 2px;
+    outline: 2px solid var(--color-night);
+    outline-offset: 4px;
+    box-shadow: 0 0 0 4px white;
   }
 
   /* Headings get tabindex="-1" only so we can move focus to them on screen
@@ -53,6 +61,175 @@
   [tabindex="-1"]:focus {
     outline: none;
   }
+}
+
+/* A frosted card that sits on the moving background. Where the browser
+   can't blur what's behind it, the card is simply more solid white. */
+@utility surface {
+  background-color: rgb(255 255 255 / 0.97);
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    background-color: rgb(255 255 255 / 0.92);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+  }
+}
+
+/* The app background: glowing yellow and orange blobs drifting slowly over
+   near-black, with a faint film grain. Our own CSS, modelled on the look
+   and default settings of Framer's "Gradient Motion Background": 3 organic
+   blobs, 60–90% of the frame, blurred about 120px, blended with "screen",
+   drifting on a roughly 15-second cycle. */
+@layer components {
+  /* Fixed behind the app column only (max 430px, centred like the app),
+     not the whole browser window. container-type: size lets the blobs use
+     cq units: sizes relative to this box, not the window. */
+  .gradient-bg {
+    position: fixed;
+    inset: 0;
+    margin-inline: auto;
+    max-width: 430px;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    background: #0a0705; /* warm near-black */
+    isolation: isolate; /* keeps the blend modes inside this layer */
+    container-type: size;
+  }
+
+  .gradient-bg__blob {
+    position: absolute;
+    /* An uneven circle reads as an organic "blob" once it's blurred. */
+    border-radius: 50% 45% 55% 50% / 50% 55% 45% 50%;
+    background: var(--blob);
+    filter: blur(min(120px, 24cqw));
+    /* "screen" makes overlapping colors glow brighter, like light. */
+    mix-blend-mode: screen;
+    /* Each blob's strength is set below. They're tuned so white text on
+       top stays readable (checked: at least 4.5:1 at the brightest spot). */
+    opacity: var(--strength);
+  }
+  /* A small golden highlight in the top corner. Golden yellow (rather than
+     lemon) stays warm instead of turning olive when it's dimmed. */
+  .gradient-bg__blob:nth-child(1) {
+    --blob: #ffb800;
+    --strength: 0.55;
+    width: 60cqw;
+    height: 28cqh;
+    top: -8cqh;
+    left: -14cqw;
+  }
+  /* The main, vivid orange glow. */
+  .gradient-bg__blob:nth-child(2) {
+    --blob: #ff6a00;
+    --strength: 0.66;
+    width: 100cqw;
+    height: 52cqh;
+    top: 24cqh;
+    right: -32cqw;
+  }
+  /* A red-orange glow lower down for depth. */
+  .gradient-bg__blob:nth-child(3) {
+    --blob: #ff4d00;
+    --strength: 0.64;
+    width: 85cqw;
+    height: 42cqh;
+    bottom: -14cqh;
+    left: -28cqw;
+  }
+
+  /* Drifting only for people who haven't asked for less motion. Each blob
+     has its own timing, so the pattern never visibly repeats. */
+  @media (prefers-reduced-motion: no-preference) {
+    .gradient-bg__blob {
+      animation: blob-drift 15s ease-in-out infinite alternate;
+    }
+    .gradient-bg__blob:nth-child(2) {
+      animation-duration: 19s;
+      animation-delay: -6s;
+      animation-direction: alternate-reverse;
+    }
+    .gradient-bg__blob:nth-child(3) {
+      animation-duration: 23s;
+      animation-delay: -11s;
+    }
+  }
+
+  /* Film grain: tiny random noise drawn by an SVG filter (feTurbulence),
+     tiled across the screen and blended softly into the colors. */
+  .gradient-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.12;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* On phone-sized screens the app is the whole screen, so let the
+     background reach the edges (no white strips beside a 430px column). */
+  @media (max-width: 480px) {
+    .gradient-bg {
+      max-width: none;
+    }
+    /* Match the page behind the app too (seen when you pull past the top
+       or bottom of the page on a phone), so it's never a flash of white. */
+    body {
+      background: #0a0705;
+    }
+  }
+
+  /* The camera screen has its own dark design, so hide the blobs there. */
+  body:has([data-dark-screen]) .gradient-bg {
+    display: none;
+  }
+}
+
+@keyframes blob-drift {
+  0% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  50% {
+    transform: translate(14cqw, 6cqh) scale(1.1) rotate(25deg);
+  }
+  100% {
+    transform: translate(-10cqw, 10cqh) scale(0.95) rotate(-15deg);
+  }
+}
+
+/* Light text on the dark background.
+   Every component colors its text with "ink" (text-ink, text-ink-soft).
+   Inside the app (#root) ink becomes white, and light surfaces (cards,
+   dialogs, inputs, colored tiles) switch it back to near-black for whatever
+   is inside them. So the same class gives the right color in both places.
+   They're in the base layer, so a component's own text color (e.g. a
+   selected chip's has-checked:text-white) still wins. */
+@layer base {
+  #root {
+    --color-ink: #ffffff;
+    --color-ink-soft: #f5f1ec;
+    color: var(--color-ink);
+  }
+  #root :where(.surface, .bg-white, .bg-fog, .bg-peach, .bg-apricot, .bg-paper, dialog) {
+    --color-ink: #111111;
+    --color-ink-soft: #444444;
+    color: var(--color-ink);
+  }
+}
+
+/* The rules below aren't in a layer, so they beat Tailwind classes. */
+
+/* Black buttons and chips (bg-ink) would disappear on black, so on the
+   dark background they turn white with black text, and their white icons
+   turn black. Inside a light card they stay black. */
+#root .bg-ink:not(:where(.surface, .bg-white, dialog) *) {
+  color: #111111;
+}
+#root .bg-ink:not(:where(.surface, .bg-white, dialog) *):hover {
+  background-color: #e7e5e4;
+}
+#root .bg-ink:not(:where(.surface, .bg-white, dialog) *) img,
+#root .page-icon:not(:where(.surface, .bg-white, dialog) *) {
+  filter: invert(1);
 }
 
 /* Stop scrolling inside or over a modal dialog from scrolling the page

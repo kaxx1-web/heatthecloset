@@ -62,7 +62,7 @@ export default function PickPiecesScreen({ data, today, day, photoUrl, onChange,
   return (
     // The sheet has its own <form>, and forms can't be nested, so it sits
     // next to this form instead of inside it.
-    <div className="flex flex-1 flex-col bg-white">
+    <div className="flex flex-1 flex-col">
       <form onSubmit={handleSave} noValidate className="flex flex-1 flex-col gap-3.5 px-5 pt-11 pb-6">
         <ConfirmHeader
           showDots={false}
@@ -109,7 +109,7 @@ export default function PickPiecesScreen({ data, today, day, photoUrl, onChange,
         <div className="flex-1" />
 
         {error && (
-          <p role="alert" className="font-medium text-red-700">
+          <p role="alert" className="surface rounded-xl px-3.5 py-2.5 font-medium text-red-700">
             {error}
           </p>
         )}

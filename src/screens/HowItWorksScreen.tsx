@@ -22,7 +22,7 @@ const STEPS = [
 
 export default function HowItWorksScreen() {
   return (
-    <div className="flex flex-1 flex-col gap-4 bg-white px-6 pt-11 pb-7">
+    <div className="flex flex-1 flex-col gap-4 px-6 pt-11 pb-7">
       <BackLink href={routeHref('welcome')} label="Back" />
       <StepDots active={0} />
       <h1 tabIndex={-1} className="text-[30px] leading-[1.15] font-extrabold text-ink">
