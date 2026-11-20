@@ -19,6 +19,9 @@
 
 :root {
   color-scheme: light;
+  /* The height of the screen the app fills: the browser window on a
+     phone, or the drawn phone's screen on a large screen (set below). */
+  --app-height: 100dvh;
 }
 
 /* These rules live in Tailwind's "base" layer, so Tailwind classes on a
@@ -26,7 +29,7 @@
    layer would beat every Tailwind class, whatever its specificity. */
 @layer base {
   body {
-    /* White like the screens, so the strips beside the 430px-wide app on
+    /* White like the screens, so the strips beside the 440px-wide app on
        wider phones blend in. */
     background: white;
     color: var(--color-ink);
@@ -81,14 +84,14 @@
    blobs, 60–90% of the frame, blurred about 120px, blended with "screen",
    drifting on a roughly 15-second cycle. */
 @layer components {
-  /* Fixed behind the app column only (max 430px, centred like the app),
+  /* Fixed behind the app column only (max 440px, centred like the app),
      not the whole browser window. container-type: size lets the blobs use
      cq units: sizes relative to this box, not the window. */
   .gradient-bg {
     position: fixed;
     inset: 0;
     margin-inline: auto;
-    max-width: 430px;
+    max-width: 440px;
     z-index: -1;
     overflow: hidden;
     pointer-events: none;
@@ -170,7 +173,7 @@
   }
 
   /* On phone-sized screens the app is the whole screen, so let the
-     background reach the edges (no white strips beside a 430px column). */
+     background reach the edges (no white strips beside a 440px column). */
   @media (max-width: 480px) {
     .gradient-bg {
       max-width: none;
@@ -245,4 +248,233 @@ dialog::backdrop {
   overflow: hidden;
   overscroll-behavior: contain;
   background: rgb(0 0 0 / 0.45);
+}
+
+/* ------------------------------------------------------------------------
+   iPhone 17 Pro Max frame (see components/PhoneFrame.tsx).
+   Drawn only on large screens. Below the breakpoint every wrapper is
+   `display: contents` (no box of its own), so on a phone the app fills
+   the screen exactly as before, and the phone-only parts are hidden.
+   ------------------------------------------------------------------------ */
+@layer components {
+  .device-stage,
+  .device,
+  .device__bezel,
+  .device__screen,
+  .device__scroll {
+    display: contents;
+  }
+  .device__button,
+  .device__status,
+  .device__home-indicator {
+    display: none;
+  }
+
+  /* Keep in sync with FRAMED in PhoneFrame.tsx. */
+  @media (min-width: 700px) and (min-height: 560px) {
+    :root {
+      --app-height: 956px; /* the iPhone 17 Pro Max screen, in points */
+    }
+
+    /* The page behind the phone. (Also replaces the camera screen's dark
+       page, which only made sense when the app filled the window.) */
+    body,
+    body:has([data-dark-screen]) {
+      background: #120d0a;
+    }
+
+    /* The desk the phone sits on: fills the window. The gradient is here,
+       not on <body>, because the page itself has no height (everything is
+       inside this fixed box), so a gradient there would have nothing to
+       fill. overflow: hidden because the phone's layout box stays full
+       size while it's drawn scaled down. */
+    .device-stage {
+      display: block;
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 40%, #3a2a1f, #120d0a 70%);
+    }
+
+    /* The aluminium frame, in Cosmic Orange to match the app's colors.
+       --device-scale (set by PhoneFrame.tsx) shrinks the phone to fit
+       shorter windows; the layout itself stays at real size. */
+    .device {
+      display: block;
+      /* Centred in the window: top/left 50% puts its corner in the middle,
+         then translate(-50%, -50%) moves it back by half its own size. */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 476px;
+      height: 992px;
+      padding: 5px;
+      border-radius: 82px;
+      background: linear-gradient(135deg, #f3b07a 0%, #d8692b 30%, #f0a067 55%, #b9531c 80%, #e48a4e 100%);
+      box-shadow:
+        inset 0 0 0 1px rgb(255 255 255 / 0.35),
+        0 0 0 1px rgb(0 0 0 / 0.4),
+        0 40px 90px rgb(0 0 0 / 0.55);
+      transform: translate(-50%, -50%) scale(var(--device-scale, 1));
+    }
+
+    /* The black glass border around the screen. */
+    .device__bezel {
+      display: block;
+      height: 100%;
+      padding: 13px;
+      border-radius: 77px;
+      background: #050505;
+    }
+
+    /* The screen. `contain: layout paint` makes it the containing block
+       for position: fixed, so the app's fixed tab bar and background stay
+       inside the phone, and clips everything to the rounded corners. */
+    .device__screen {
+      display: block;
+      position: relative;
+      height: 100%;
+      border-radius: 64px;
+      overflow: hidden;
+      contain: layout paint;
+      background: var(--color-espresso);
+    }
+    .device__screen:has([data-dark-screen]) {
+      background: var(--color-night);
+    }
+
+    /* The app scrolls in here instead of the browser window. Phones hide
+       the scrollbar, so it's hidden here too; the content still scrolls by
+       trackpad, mouse wheel, keyboard or dragging. */
+    .device__scroll {
+      display: block;
+      height: 100%;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scroll-padding-bottom: 96px; /* keep focused items clear of the tab bar */
+      scrollbar-width: none;
+    }
+    @supports not (scrollbar-width: none) {
+      .device__scroll::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    /* Status bar: time on the left of the Dynamic Island, icons on the
+       right, over the top of the app (whose screens already leave ~52px
+       for it, as in the Figma frames). White, like iOS over a dark app. */
+    .device__status {
+      display: grid;
+      grid-template-columns: 1fr 126px 1fr;
+      align-items: center;
+      position: absolute;
+      inset: 0 0 auto;
+      z-index: 30;
+      height: 59px;
+      padding-top: 2px;
+      color: white;
+      /* A dark fade behind it, so the time and icons stay readable when
+         white cards scroll up underneath. */
+      background: linear-gradient(to bottom, rgb(18 13 10 / 0.85) 55%, rgb(18 13 10 / 0));
+      pointer-events: none;
+    }
+    .device__time {
+      justify-self: center;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      font-variant-numeric: tabular-nums;
+    }
+    .device__island {
+      width: 126px;
+      height: 37px;
+      border-radius: 20px;
+      background: black;
+    }
+    .device__icons {
+      display: flex;
+      justify-self: center;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* The home indicator bar. "difference" blending turns it dark over the
+       white tab bar and light over the dark background. */
+    .device__home-indicator {
+      display: block;
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      z-index: 30;
+      width: 150px;
+      height: 5px;
+      margin-left: -75px;
+      border-radius: 3px;
+      background: white;
+      mix-blend-mode: difference;
+      pointer-events: none;
+    }
+
+    /* Side buttons, sticking out 3px from the frame. */
+    .device__button {
+      display: block;
+      position: absolute;
+      width: 4px;
+      border-radius: 2px;
+      background: linear-gradient(to bottom, #c45e22, #eb9a60 50%, #b9531c);
+    }
+    .device__button--action,
+    .device__button--volume-up,
+    .device__button--volume-down {
+      left: -3px;
+    }
+    .device__button--side,
+    .device__button--camera {
+      right: -3px;
+    }
+    .device__button--action {
+      top: 200px;
+      height: 34px;
+    }
+    .device__button--volume-up {
+      top: 262px;
+      height: 64px;
+    }
+    .device__button--volume-down {
+      top: 340px;
+      height: 64px;
+    }
+    .device__button--side {
+      top: 300px;
+      height: 104px;
+    }
+    .device__button--camera {
+      top: 580px;
+      height: 72px;
+    }
+  }
+}
+
+/* Outside any layer, so these beat the Tailwind classes on the dialogs
+   (w-full, max-w-…, mx-auto…). Same breakpoint as the phone frame. */
+@media (min-width: 700px) and (min-height: 560px) {
+  /* Dialogs open in the browser's top layer, above the whole page, so
+     line them up with the phone screen (measured by PhoneFrame.tsx).
+     The bottom sheet sits on the screen's bottom edge, with the screen's
+     rounded corners. */
+  dialog[data-sheet]:modal {
+    position: fixed;
+    inset: auto auto var(--screen-bottom-gap) var(--screen-left);
+    width: var(--screen-width);
+    max-width: none;
+    max-height: calc(var(--screen-height) * 0.92);
+    margin: 0;
+    border-bottom-left-radius: var(--screen-radius);
+    border-bottom-right-radius: var(--screen-radius);
+  }
+  /* Centred dialogs are already over the phone (both are centred); just
+     keep them narrower than the screen when the phone is scaled down. */
+  dialog:not([data-sheet]):modal {
+    max-width: min(382px, calc(var(--screen-width) - 32px));
+  }
 }

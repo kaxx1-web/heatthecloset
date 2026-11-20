@@ -46,7 +46,8 @@ export default function AddPieceSheet({ dialogRef, existingNames, onAdd }: Props
       ref={dialogRef}
       aria-labelledby="add-piece-title"
       onClose={() => setError('')}
-      className="mx-auto mt-auto mb-0 max-h-[92dvh] w-full max-w-[430px] overflow-y-auto rounded-t-3xl bg-white px-5 pt-3 pb-7 text-ink"
+      data-sheet
+      className="mx-auto mt-auto mb-0 max-h-[92dvh] w-full max-w-[440px] overflow-y-auto rounded-t-3xl bg-white px-5 pt-3 pb-7 text-ink"
     >
       <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
         {/* The grab handle is only a visual cue. */}

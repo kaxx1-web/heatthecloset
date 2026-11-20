@@ -168,7 +168,7 @@ export default function App() {
   if (!profile || FULL_SCREEN_ROUTES.includes(screen)) {
     return (
       <PiecePhotosContext value={photos}>
-        <main className="mx-auto flex min-h-dvh max-w-[430px] flex-col">
+        <main className="mx-auto flex min-h-(--app-height) max-w-[440px] flex-col">
           {saveWarning}
           {screen === 'demo' ? (
             <DemoScreen hasData={profile !== null} onLoadDemo={loadDemo} />
@@ -232,7 +232,7 @@ export default function App() {
   // pb-[92px] keeps the last content above the fixed 76px tab bar.
   return (
     <PiecePhotosContext value={photos}>
-      <div className="mx-auto min-h-dvh max-w-[430px] pb-[92px]">
+      <div className="mx-auto min-h-(--app-height) max-w-[440px] pb-[92px]">
         {saveWarning}
         <main>
           {screen === 'heatmap' && heatCategory && dayNumber(profile.startDate, today) >= CHALLENGE_DAYS ? (
