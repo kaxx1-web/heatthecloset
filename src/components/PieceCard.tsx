@@ -22,7 +22,7 @@ export default function PieceCard({ piece, logs, today }: { piece: Piece; logs: 
         className="flex items-center gap-2.5 rounded-[14px] border-[1.5px] border-[#e0e0e0] bg-white px-2.5 py-2 hover:bg-[#fafafa]"
       >
         <div className="flex size-11 shrink-0 items-center justify-center rounded-[10px] bg-fog">
-          <GarmentIcon category={piece.category} name={piece.name} size={30} />
+          <GarmentIcon category={piece.category} name={piece.name} size={30} pieceId={piece.id} />
         </div>
         <div className="flex min-w-0 flex-1 flex-col gap-px leading-[1.4]">
           <span className="text-sm font-bold text-ink">{piece.name}</span>

@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 
 // Navigation with #hash links instead of real page routes.
 // Everything after "#" stays in the browser and is never sent to the server,
-// so refreshing "/closet-map/#/closet" still loads index.html on GitHub
-// Pages. A real route like "/closet-map/closet" would ask the server for a
+// so refreshing "/closet-map/#/heatmap" still loads index.html on GitHub
+// Pages. A real route like "/closet-map/heatmap" would ask the server for a
 // page that doesn't exist and show a 404.
 //
 // Some routes take a parameter after a second slash:
@@ -13,7 +13,6 @@ import { useEffect, useRef, useState } from 'react'
 export type Route =
   // Tabs (shown with the bottom tab bar)
   | 'home'
-  | 'closet'
   | 'heatmap'
   | 'profile'
   // Full-screen steps (no tab bar)
@@ -27,7 +26,6 @@ export type Route =
 
 const ROUTES: Route[] = [
   'home',
-  'closet',
   'heatmap',
   'profile',
   'welcome',

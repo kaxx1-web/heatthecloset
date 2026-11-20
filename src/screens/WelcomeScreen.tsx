@@ -1,21 +1,16 @@
 import { useRef, useState } from 'react'
-import bagIcon from '../assets/figma/welcome-bag.svg'
-import dressIcon from '../assets/figma/welcome-dress.svg'
-import jacketIcon from '../assets/figma/welcome-jacket.svg'
-import pantsIcon from '../assets/figma/welcome-pants.svg'
-import sneakerIcon from '../assets/figma/welcome-sneaker.svg'
-import teeIcon from '../assets/figma/welcome-tee.svg'
+import { stockPhotoFor } from '../data/garmentPhotos'
 import NameDialog from '../components/NameDialog'
 import { onboardingOutline, onboardingPrimary } from '../components/ui'
 
 // Figma: "01 Welcome and sign up"
 const TILES = [
-  { icon: teeIcon, bg: 'bg-peach' },
-  { icon: pantsIcon, bg: 'bg-fog' },
-  { icon: dressIcon, bg: 'bg-rust' },
-  { icon: sneakerIcon, bg: 'bg-apricot' },
-  { icon: jacketIcon, bg: 'bg-peach' },
-  { icon: bagIcon, bg: 'bg-rust' },
+  { icon: stockPhotoFor('Top', 'tee'), bg: 'bg-peach' },
+  { icon: stockPhotoFor('Bottom', 'jeans'), bg: 'bg-fog' },
+  { icon: stockPhotoFor('Dress', 'floral'), bg: 'bg-rust' },
+  { icon: stockPhotoFor('Shoes', 'navy sneakers'), bg: 'bg-apricot' },
+  { icon: stockPhotoFor('Outerwear', 'pink blazer'), bg: 'bg-peach' },
+  { icon: stockPhotoFor('Bag', 'leather duffel'), bg: 'bg-rust' },
 ]
 
 type Props = {
@@ -41,8 +36,9 @@ export default function WelcomeScreen({ onNameSaved }: Props) {
       {/* Decorative garment tiles: hidden from screen readers. */}
       <div aria-hidden="true" className="grid grid-cols-3 gap-2.5 pt-5 pb-2">
         {TILES.map(({ icon, bg }, i) => (
-          <div key={i} className={`flex h-24 items-center justify-center rounded-2xl ${bg}`}>
-            <img src={icon} width={52} height={52} alt="" />
+          // The tile color shows while the photo loads.
+          <div key={i} className={`h-24 overflow-hidden rounded-2xl ${bg}`}>
+            <img src={icon} width={200} height={200} alt="" className="size-full object-cover" />
           </div>
         ))}
       </div>

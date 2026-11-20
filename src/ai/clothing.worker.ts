@@ -57,7 +57,7 @@ async function identify(photo: Blob) {
   const { processor, model } = await load()
   self.postMessage({ type: 'analyzing' })
 
-  // Cut the photo into the top / bottom / shoes areas.
+  // The whole photo, plus its top / bottom / shoes areas.
   const image = await RawImage.fromBlob(photo)
   const regions = Object.keys(REGIONS) as Region[]
   const crops = await Promise.all(
@@ -72,7 +72,7 @@ async function identify(photo: Blob) {
     }),
   )
 
-  // One run of the model for all three crops; each comes back as 512
+  // One run of the model for all four pictures; each comes back as 512
   // numbers describing what's in it.
   const inputs = await processor(crops)
   const { image_embeds } = await model(inputs)

@@ -14,6 +14,7 @@
   --color-night: #161616; /* camera screen background */
   --color-paper: #f1f0ec; /* text on the camera screen */
   --color-ash: #cfcfcb; /* secondary text on the camera screen */
+  --color-espresso: #2a1f18; /* app background, under the glowing blobs */
 }
 
 :root {
@@ -75,7 +76,7 @@
 }
 
 /* The app background: glowing yellow and orange blobs drifting slowly over
-   near-black, with a faint film grain. Our own CSS, modelled on the look
+   a warm dark brown, with a faint film grain. Our own CSS, modelled on the look
    and default settings of Framer's "Gradient Motion Background": 3 organic
    blobs, 60–90% of the frame, blurred about 120px, blended with "screen",
    drifting on a roughly 15-second cycle. */
@@ -91,7 +92,9 @@
     z-index: -1;
     overflow: hidden;
     pointer-events: none;
-    background: #0a0705; /* warm near-black */
+    /* A soft warm dark brown rather than near-black, so the screen feels
+       less heavy. */
+    background: var(--color-espresso);
     isolation: isolate; /* keeps the blend modes inside this layer */
     container-type: size;
   }
@@ -105,14 +108,15 @@
     /* "screen" makes overlapping colors glow brighter, like light. */
     mix-blend-mode: screen;
     /* Each blob's strength is set below. They're tuned so white text on
-       top stays readable (checked: at least 4.5:1 at the brightest spot). */
+       top stays readable: the softer #f5f1ec text gets at least 4.6:1 at
+       the brightest spot of any one blob (4.5:1 is the minimum). */
     opacity: var(--strength);
   }
   /* A small golden highlight in the top corner. Golden yellow (rather than
      lemon) stays warm instead of turning olive when it's dimmed. */
   .gradient-bg__blob:nth-child(1) {
     --blob: #ffb800;
-    --strength: 0.55;
+    --strength: 0.45;
     width: 60cqw;
     height: 28cqh;
     top: -8cqh;
@@ -121,7 +125,7 @@
   /* The main, vivid orange glow. */
   .gradient-bg__blob:nth-child(2) {
     --blob: #ff6a00;
-    --strength: 0.66;
+    --strength: 0.55;
     width: 100cqw;
     height: 52cqh;
     top: 24cqh;
@@ -130,7 +134,7 @@
   /* A red-orange glow lower down for depth. */
   .gradient-bg__blob:nth-child(3) {
     --blob: #ff4d00;
-    --strength: 0.64;
+    --strength: 0.54;
     width: 85cqw;
     height: 42cqh;
     bottom: -14cqh;
@@ -174,7 +178,7 @@
     /* Match the page behind the app too (seen when you pull past the top
        or bottom of the page on a phone), so it's never a flash of white. */
     body {
-      background: #0a0705;
+      background: var(--color-espresso);
     }
   }
 

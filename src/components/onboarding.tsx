@@ -26,7 +26,7 @@ export function StepDots({ active, dark = false }: { active: number; dark?: bool
 // "< Back" / "< Retake". A link, because it goes to another screen.
 // With `historyBack`, it acts like the browser's back button when there's a
 // previous page in this tab, so you return to wherever you came from
-// (Home, Closet or the heat map). `href` is the fallback, e.g. after a refresh.
+// (Home or the heat map). `href` is the fallback, e.g. after a refresh.
 export function BackLink({ href, label, historyBack = false }: { href: string; label: string; historyBack?: boolean }) {
   return (
     <a

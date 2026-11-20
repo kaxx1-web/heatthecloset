@@ -1,12 +1,15 @@
 import { useRef, useState } from 'react'
+import type { ChangeEvent } from 'react'
 import calendarIcon from '../assets/figma/calendar-white.svg'
 import checkIcon from '../assets/figma/check-dark.svg'
 import ConfirmDialog, { openConfirmDialog } from '../components/ConfirmDialog'
 import GarmentIcon from '../components/GarmentIcon'
 import { HEAT } from '../components/heat'
 import { BackLink } from '../components/onboarding'
+import { usePiecePhoto } from '../components/piecePhotos'
 import { onboardingOutline, onboardingPrimary } from '../components/ui'
 import { formatShortDate } from '../data/dates'
+import { preparePhoto } from '../data/photos'
 import { CHALLENGE_DAYS, activePlans, goesWith, heatLevel, lastWorn, timesPhrase, timesWorn, timesWornEver } from '../data/stats'
 import { cancelPlan, markWornToday, planThisWeek, removePiece } from '../data/storage'
 import type { ClosetData, ISODate, Piece } from '../data/types'
@@ -17,6 +20,8 @@ type Props = {
   piece: Piece
   today: ISODate
   onChange: (next: ClosetData) => void
+  // Saves (Blob) or removes (null) this piece's photo; false if it failed.
+  onPhotoChange: (photo: Blob | null) => Promise<boolean>
 }
 
 const STATUS = {
@@ -26,9 +31,11 @@ const STATUS = {
 }
 
 // Figma: "14 Item detail"
-export default function ItemScreen({ data, piece, today, onChange }: Props) {
+export default function ItemScreen({ data, piece, today, onChange, onPhotoChange }: Props) {
   const confirmRef = useRef<HTMLDialogElement>(null)
   const [message, setMessage] = useState('')
+  const [savingPhoto, setSavingPhoto] = useState(false)
+  const photo = usePiecePhoto(piece.id)
 
   const level = heatLevel(data.logs, piece.id, today)
   const last = lastWorn(data.logs, piece.id)
@@ -53,7 +60,30 @@ export default function ItemScreen({ data, piece, today, onChange }: Props) {
     setMessage(`Added to today’s outfit. Worn ${timesPhrase(timesWorn(data.logs, piece.id, CHALLENGE_DAYS, today) + 1)} in 30 days.`)
   }
 
+  // The file input's change event: shrink the chosen photo, then save it.
+  async function choosePhoto(event: ChangeEvent<HTMLInputElement>) {
+    const input = event.currentTarget
+    const file = input.files?.[0]
+    input.value = '' // so choosing the same file again still fires "change"
+    if (!file) return
+    setSavingPhoto(true)
+    try {
+      const saved = await onPhotoChange(await preparePhoto(file))
+      setMessage(saved ? 'Photo saved.' : 'Couldn’t save the photo in this browser.')
+    } catch {
+      setMessage('That file couldn’t be opened as a photo. Try a JPEG or PNG.')
+    } finally {
+      setSavingPhoto(false)
+    }
+  }
+
+  async function removePhoto() {
+    await onPhotoChange(null)
+    setMessage('Photo removed.')
+  }
+
   function letGo() {
+    void onPhotoChange(null)
     onChange(removePiece(data, piece.id))
     navigate('heatmap', piece.category)
   }
@@ -66,7 +96,30 @@ export default function ItemScreen({ data, piece, today, onChange }: Props) {
       <BackLink href={backHref} label="Back" historyBack />
 
       <div className={`flex h-40 shrink-0 items-center justify-center rounded-[20px] ${HEAT[level].bg}`}>
-        <GarmentIcon category={piece.category} name={piece.name} size={96} />
+        {photo ? (
+          // The piece's own photo. The heat color still shows around it.
+          <img src={photo} width={136} height={136} alt={`Photo of ${piece.name}`} className="aspect-square rounded-2xl object-cover" />
+        ) : (
+          <GarmentIcon category={piece.category} name={piece.name} size={136} pieceId={piece.id} />
+        )}
+      </div>
+
+      {/* Not in the Figma frame. The <label> wraps a hidden file input, so
+          tapping it opens the file picker; on phones that offers the camera
+          or the photo library. has-focus-visible shows the keyboard focus
+          ring on the label, since the input itself is invisible. */}
+      <div className="-mt-1 flex gap-4">
+        <label
+          className={`relative flex min-h-11 cursor-pointer items-center text-sm font-semibold text-ink underline underline-offset-4 has-focus-visible:outline-3 has-focus-visible:outline-offset-2 has-focus-visible:outline-blue-700 ${savingPhoto ? 'pointer-events-none text-ink-soft' : ''}`}
+        >
+          {savingPhoto ? 'Saving photo…' : photo ? 'Change photo' : 'Add photo'}
+          <input type="file" accept="image/*" onChange={choosePhoto} disabled={savingPhoto} className="sr-only" />
+        </label>
+        {photo && !savingPhoto && (
+          <button type="button" onClick={removePhoto} className="flex min-h-11 items-center text-sm font-semibold text-ink-soft underline underline-offset-4">
+            Remove photo
+          </button>
+        )}
       </div>
 
       <div className="flex flex-col items-start gap-2">
@@ -99,7 +152,7 @@ export default function ItemScreen({ data, piece, today, onChange }: Props) {
             {partners.map((p) => (
               <li key={p.id} className="flex min-w-0 flex-1 flex-col gap-1.5">
                 <div className="flex h-[58px] items-center justify-center rounded-xl bg-peach">
-                  <GarmentIcon category={p.category} name={p.name} size={32} />
+                  <GarmentIcon category={p.category} name={p.name} size={32} pieceId={p.id} />
                 </div>
                 <span className="text-[13px] leading-[1.4] text-ink">{p.name}</span>
               </li>

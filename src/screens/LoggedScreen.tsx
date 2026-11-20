@@ -38,7 +38,7 @@ export default function LoggedScreen({ data, log, today, day }: Props) {
         {pieces.map((piece) => (
           <li key={piece.id} className="flex items-center gap-3 py-1">
             <div className="flex size-12 shrink-0 items-center justify-center rounded-[10px] bg-peach">
-              <GarmentIcon category={piece.category} name={piece.name} size={32} />
+              <GarmentIcon category={piece.category} name={piece.name} size={32} pieceId={piece.id} />
             </div>
             <div className="flex min-w-0 flex-1 flex-col leading-[1.4]">
               <p className="text-[15px] font-bold text-ink">{piece.name}</p>

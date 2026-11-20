@@ -125,7 +125,7 @@ export default function ProfileScreen({ data, profile, today, onLoadDemo, onRese
               <li key={piece.id} className="min-w-0 flex-1">
                 <a href={routeHref('item', piece.id)} className="flex flex-col gap-1 rounded-xl">
                   <div className="flex h-[62px] items-center justify-center rounded-xl bg-peach">
-                    <GarmentIcon category={piece.category} name={piece.name} size={32} />
+                    <GarmentIcon category={piece.category} name={piece.name} size={32} pieceId={piece.id} />
                   </div>
                   <span className="text-[13px] leading-[1.4] font-bold text-ink">{piece.name}</span>
                   <span className="text-xs leading-[1.4] text-ink-soft">worn again {formatShortDate(date)}</span>
@@ -185,7 +185,7 @@ export default function ProfileScreen({ data, profile, today, onLoadDemo, onRese
       </section>
 
       <p className="text-[13px] leading-[1.4] text-ink-soft">
-        Your name and logs are stored only in this browser. Photos are never saved.
+        Your name, logs and piece photos are stored only in this browser and never uploaded. Daily outfit photos are never saved.
       </p>
 
       <ConfirmDialog

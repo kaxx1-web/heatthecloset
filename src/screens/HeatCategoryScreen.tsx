@@ -45,7 +45,7 @@ export default function HeatCategoryScreen({ data, category, today }: Props) {
             >
               {/* The tile color shows the heat level; the text says it too. */}
               <div className={`flex size-11 shrink-0 items-center justify-center rounded-[10px] ${HEAT[level].bg}`}>
-                <GarmentIcon category={category} name={piece.name} size={30} slot="heat" />
+                <GarmentIcon category={category} name={piece.name} size={30} pieceId={piece.id} />
               </div>
               <div className="flex min-w-0 flex-1 flex-col gap-px leading-[1.4]">
                 <span className="text-sm font-bold text-ink">{piece.name}</span>

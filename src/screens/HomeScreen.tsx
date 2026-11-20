@@ -1,8 +1,11 @@
+import type { CSSProperties } from 'react'
 import bellIcon from '../assets/figma/bell.svg'
+import cameraIcon from '../assets/figma/step-camera.svg'
 import lockIcon from '../assets/figma/lock.svg'
 import GarmentIcon from '../components/GarmentIcon'
 import PieceCard from '../components/PieceCard'
 import ProgressBar, { daysToGo } from '../components/ProgressBar'
+import { onboardingPrimary } from '../components/ui'
 import { formatLongDate } from '../data/dates'
 import { CHALLENGE_DAYS, activePlans, dayNumber, piecesWornCount, suggestOutfit, timesPhrase, timesWorn } from '../data/stats'
 import type { ClosetData, ISODate, Profile } from '../data/types'
@@ -23,6 +26,7 @@ export default function HomeScreen({ data, profile, today }: Props) {
   const piecesWorn = piecesWornCount(data.logs, profile.startDate)
   const suggestion = suggestOutfit(data.pieces, data.logs, today)
   const plans = activePlans(data, today)
+  const loggedToday = data.logs.some((log) => log.date === today)
 
   // Most-worn first.
   const byWear = [...data.pieces].sort(
@@ -43,6 +47,34 @@ export default function HomeScreen({ data, profile, today }: Props) {
           <img src={bellIcon} width={22} height={22} alt="" />
         </div>
       </header>
+
+      {/* Today's main job, right under the greeting. (This replaced the +
+          button that used to sit in the middle of the tab bar.) */}
+      {loggedToday ? (
+        <a
+          href={routeHref('logged')}
+          className="surface flex min-h-[52px] items-center gap-3 rounded-[18px] border-[1.5px] border-[#e0e0e0] px-4 py-3 hover:bg-white"
+        >
+          <span className="flex-1 leading-[1.4]">
+            <span className="block text-[15px] font-bold text-ink">Today’s outfit is logged</span>
+            <span className="block text-sm text-ink-soft">See what you wore today</span>
+          </span>
+          <span aria-hidden="true" className="text-xl text-[#9a9a9a]">
+            ›
+          </span>
+        </a>
+      ) : (
+        <a href={routeHref('photo')} className={`${onboardingPrimary} gap-2.5`}>
+          {/* The camera drawing is used as a mask, filled with the text
+              color (white), since the file itself is drawn in black. */}
+          <span
+            aria-hidden="true"
+            style={{ '--icon': `url("${cameraIcon}")` } as CSSProperties}
+            className="size-6 bg-current [mask:var(--icon)_center/contain_no-repeat]"
+          />
+          Take a photo of today’s outfit
+        </a>
+      )}
 
       <section aria-labelledby="progress-title" className="surface flex flex-col gap-2.5 rounded-[18px] border-[1.5px] border-[#e0e0e0] p-4">
         <div className="flex items-center justify-between leading-[1.4]">
@@ -69,7 +101,7 @@ export default function HomeScreen({ data, profile, today }: Props) {
               <li key={piece.id}>
                 <a href={routeHref('item', piece.id)} className="flex items-center gap-2.5 rounded-xl bg-white px-2.5 py-2">
                   <div className="flex size-11 shrink-0 items-center justify-center rounded-[10px] bg-fog">
-                    <GarmentIcon category={piece.category} name={piece.name} size={30} />
+                    <GarmentIcon category={piece.category} name={piece.name} size={30} pieceId={piece.id} />
                   </div>
                   <span className="flex-1 text-sm font-bold text-ink">{piece.name}</span>
                   <span aria-hidden="true" className="text-xl text-[#9a9a9a]">
@@ -102,7 +134,7 @@ export default function HomeScreen({ data, profile, today }: Props) {
                       piece.id === suggestion.focus.id ? 'bg-peach' : 'bg-fog'
                     }`}
                   >
-                    <GarmentIcon category={piece.category} name={piece.name} size={30} />
+                    <GarmentIcon category={piece.category} name={piece.name} size={30} pieceId={piece.id} />
                   </div>
                   <span className="line-clamp-2 text-center text-xs leading-[1.3] text-ink">{piece.name}</span>
                 </li>
@@ -128,18 +160,13 @@ export default function HomeScreen({ data, profile, today }: Props) {
           My closet
         </h2>
         {data.pieces.length === 0 ? (
-          <p className="text-sm text-ink-soft">No pieces yet. Tap + to log your first outfit.</p>
+          <p className="text-sm text-ink-soft">No pieces yet. Take a photo of today’s outfit to add your first ones.</p>
         ) : (
           <ul className="flex flex-col gap-2.5">
             {byWear.slice(0, CLOSET_PREVIEW).map((piece) => (
               <PieceCard key={piece.id} piece={piece} logs={data.logs} today={today} />
             ))}
           </ul>
-        )}
-        {data.pieces.length > CLOSET_PREVIEW && (
-          <a href={routeHref('closet')} className="inline-flex min-h-11 items-center self-start text-sm font-semibold text-ink underline underline-offset-4">
-            See all {data.pieces.length} pieces
-          </a>
         )}
 
         {day < CHALLENGE_DAYS ? (
