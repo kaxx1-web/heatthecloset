@@ -35,11 +35,12 @@ export default function PhotoScreen({ day, firstDay, onPhoto }: Props) {
     streamRef.current = null
   }
 
-  // Day 1: start downloading the outfit AI now, while you take the photo,
-  // so it's ready on the next screen. (Later days don't use it.)
+  // Start downloading the outfit AI now, while you take the photo, so it's
+  // ready on the next screen. (After the first time, the browser has it
+  // saved, so this is quick.)
   useEffect(() => {
-    if (firstDay) preloadClothingModel()
-  }, [firstDay])
+    preloadClothingModel()
+  }, [])
 
   // Turn the camera off when the user leaves this screen.
   useEffect(() => {

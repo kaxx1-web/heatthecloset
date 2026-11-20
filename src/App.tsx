@@ -208,7 +208,7 @@ export default function App() {
               data={data}
               today={today}
               day={day}
-              photoUrl={photoUrl}
+              photo={photo}
               onChange={update}
               onSaved={finishLogging}
             />
