@@ -92,7 +92,7 @@ export default function ItemScreen({ data, piece, today, onChange, onPhotoChange
   const timesLabel = ever === 0 ? 'Never' : timesPhrase(ever).replace(/^./, (c) => c.toUpperCase())
 
   return (
-    <div className="flex flex-1 flex-col gap-3.5 px-5 pt-11 pb-6">
+    <div className="flex flex-1 flex-col gap-3.5 px-5 pt-17 pb-6">
       <BackLink href={backHref} label="Back" historyBack />
 
       <div className={`flex h-40 shrink-0 items-center justify-center rounded-[20px] ${HEAT[level].bg}`}>
@@ -123,7 +123,7 @@ export default function ItemScreen({ data, piece, today, onChange, onPhotoChange
       </div>
 
       <div className="flex flex-col items-start gap-2">
-        <h1 tabIndex={-1} className="text-[27px] leading-[1.15] font-extrabold text-ink">
+        <h1 tabIndex={-1} className="text-[28px] leading-[1.15] font-extrabold text-ink">
           {piece.name}
         </h1>
         <p className={`flex h-[30px] items-center rounded-[15px] px-3 text-sm font-bold ${HEAT[level].bg} ${HEAT[level].text}`}>
@@ -134,17 +134,17 @@ export default function ItemScreen({ data, piece, today, onChange, onPhotoChange
       {/* <dl> pairs each label with its value for screen readers. */}
       <dl className="flex gap-2 leading-[1.4]">
         <div className="surface flex flex-1 flex-col gap-0.5 rounded-[14px] border-[1.5px] border-[#e0e0e0] p-3">
-          <dt className="text-[13px] text-ink-soft">Last worn</dt>
-          <dd className="text-[17px] font-bold text-ink">{last ? formatShortDate(last) : 'Not yet'}</dd>
+          <dt className="text-[14px] text-ink-soft">Last worn</dt>
+          <dd className="text-[18px] font-bold text-ink">{last ? formatShortDate(last) : 'Not yet'}</dd>
         </div>
         <div className="surface flex flex-1 flex-col gap-0.5 rounded-[14px] border-[1.5px] border-[#e0e0e0] p-3">
-          <dt className="text-[13px] text-ink-soft">Times worn</dt>
-          <dd className="text-[17px] font-bold text-ink">{timesLabel}</dd>
+          <dt className="text-[14px] text-ink-soft">Times worn</dt>
+          <dd className="text-[18px] font-bold text-ink">{timesLabel}</dd>
         </div>
       </dl>
 
       <section aria-labelledby="goes-with" className="flex flex-col gap-2">
-        <h2 id="goes-with" className="text-[15px] leading-[1.4] font-bold text-ink">
+        <h2 id="goes-with" className="text-[16px] leading-[1.4] font-bold text-ink">
           Goes with what you wear most
         </h2>
         {partners.length > 0 ? (
@@ -154,7 +154,7 @@ export default function ItemScreen({ data, piece, today, onChange, onPhotoChange
                 <div className="flex h-[58px] items-center justify-center rounded-xl bg-peach">
                   <GarmentIcon category={p.category} name={p.name} size={32} pieceId={p.id} />
                 </div>
-                <span className="text-[13px] leading-[1.4] text-ink">{p.name}</span>
+                <span className="text-[14px] leading-[1.4] text-ink">{p.name}</span>
               </li>
             ))}
           </ul>
@@ -193,7 +193,7 @@ export default function ItemScreen({ data, piece, today, onChange, onPhotoChange
         <button
           type="button"
           onClick={() => openConfirmDialog(confirmRef)}
-          className="flex h-11 items-center justify-center rounded-[14px] text-[15px] font-semibold text-ink"
+          className="flex h-11 items-center justify-center rounded-[14px] text-[16px] font-semibold text-ink"
         >
           Let it go
         </button>

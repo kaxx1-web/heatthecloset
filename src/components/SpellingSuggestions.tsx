@@ -23,7 +23,7 @@ export default function SpellingSuggestions({ id, value, myNames, onPick }: Prop
     <div id={id} className="flex flex-col gap-1.5 empty:hidden">
       {suggestions.length > 0 && (
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="text-[13px] leading-[1.4] font-semibold text-ink-soft">Did you mean:</span>
+          <span className="text-[14px] leading-[1.4] font-semibold text-ink-soft">Did you mean:</span>
           {suggestions.map((suggestion) => (
             <button
               key={suggestion}
@@ -37,7 +37,7 @@ export default function SpellingSuggestions({ id, value, myNames, onPick }: Prop
         </div>
       )}
       {unknown.length > 0 && (
-        <p className="text-[13px] leading-[1.4] text-ink-soft">
+        <p className="text-[14px] leading-[1.4] text-ink-soft">
           Check the spelling of {unknown.map((word) => `“${word}”`).join(', ')}. We couldn’t match{' '}
           {unknown.length === 1 ? 'it' : 'them'} to a clothing term or brand.
         </p>

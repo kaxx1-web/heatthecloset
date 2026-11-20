@@ -26,7 +26,7 @@ function TabLink({ tab, current }: { tab: Tab; current: Route }) {
       <a
         href={routeHref(tab.route)}
         aria-current={active ? 'page' : undefined}
-        className={`flex h-14 flex-col items-center justify-center gap-[3px] rounded-xl text-[11px] leading-[1.4] ${
+        className={`flex h-14 flex-col items-center justify-center gap-[3px] rounded-xl text-[12px] leading-[1.4] ${
           active ? 'font-bold text-ink' : 'font-medium text-[#595959]'
         }`}
       >

@@ -205,7 +205,7 @@ export default function ConfirmScreen({ data, profile, today, day, photo, onChan
       id="confirm-form"
       onSubmit={handleSave}
       noValidate
-      className="flex flex-1 flex-col gap-3.5 px-5 pt-11 pb-6"
+      className="flex flex-1 flex-col gap-3.5 px-5 pt-17 pb-6"
     >
       <ConfirmHeader
         showDots
@@ -289,7 +289,7 @@ export default function ConfirmScreen({ data, profile, today, day, photo, onChan
                 </span>
                 {row.ai.alternatives.length > 0 && (
                   <>
-                    <span className="text-[13px] leading-[1.4] font-semibold text-ink-soft">Other guesses:</span>
+                    <span className="text-[14px] leading-[1.4] font-semibold text-ink-soft">Other guesses:</span>
                     {row.ai.alternatives.map((alt) => (
                       <button
                         key={alt.name}

@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { stockPhotoFor } from '../data/garmentPhotos'
 import NameDialog from '../components/NameDialog'
-import { onboardingOutline, onboardingPrimary } from '../components/ui'
+import { signupOutline, signupPrimary } from '../components/ui'
 
 // Figma: "01 Welcome and sign up"
 const TILES = [
@@ -32,44 +32,44 @@ export default function WelcomeScreen({ onNameSaved }: Props) {
   }
 
   return (
-    <div className="flex flex-1 flex-col gap-4 px-6 pt-12 pb-7">
+    <div className="flex flex-1 flex-col gap-4 px-6 pt-18 pb-7">
       {/* Decorative garment tiles: hidden from screen readers. */}
-      <div aria-hidden="true" className="grid grid-cols-3 gap-2.5 pt-5 pb-2">
+      <div aria-hidden="true" className="grid grid-cols-3 gap-2 pt-5 pb-1">
         {TILES.map(({ icon, bg }, i) => (
           // The tile color shows while the photo loads.
-          <div key={i} className={`h-24 overflow-hidden rounded-2xl ${bg}`}>
+          <div key={i} className={`h-20 overflow-hidden rounded-xl ${bg}`}>
             <img src={icon} width={200} height={200} alt="" className="size-full object-cover" />
           </div>
         ))}
       </div>
 
-      <h1 tabIndex={-1} className="text-[32px] leading-[1.1] font-extrabold tracking-[-0.5px] text-ink">
+      <h1 tabIndex={-1} className="text-[28px] leading-[1.15] font-extrabold tracking-[-0.4px] text-ink">
         Your closet has more to offer.
       </h1>
-      <p className="text-[17px] leading-[1.4] text-ink-soft">
+      <p className="text-[16px] leading-[1.45] text-ink-soft">
         Log your outfit each day for 30 days. Then see what you’ve stopped wearing, and wear it
         again.
       </p>
 
       <div className="flex-1" />
 
-      <div className="flex flex-col gap-2.5">
-        <button type="button" className={onboardingPrimary} onClick={() => askName(true)}>
+      <div className="flex flex-col gap-2">
+        <button type="button" className={signupPrimary} onClick={() => askName(true)}>
           Continue with Apple
         </button>
-        <button type="button" className={onboardingOutline} onClick={() => askName(true)}>
+        <button type="button" className={signupOutline} onClick={() => askName(true)}>
           Continue with Google
         </button>
         <button
           type="button"
-          className="flex h-11 items-center justify-center rounded-[14px] text-[15px] font-semibold text-ink"
+          className="flex h-11 items-center justify-center rounded-xl text-[15px] font-semibold text-ink"
           onClick={() => askName(true)}
         >
           Sign up with email
         </button>
         <button
           type="button"
-          className="flex h-9 items-center justify-center rounded-[14px] text-sm font-bold text-ink"
+          className="flex h-10 items-center justify-center rounded-xl text-sm font-bold text-ink"
           onClick={() => askName(false)}
         >
           I already have an account

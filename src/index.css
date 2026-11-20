@@ -5,6 +5,16 @@
 @theme {
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
 
+  /* Tailwind's text sizes, each 1px bigger than its defaults (12, 14,
+     16, 18, 20, 24px) for easier reading on a phone. Exact sizes used in
+     components (text-[15px]…) were raised by 1px to match. */
+  --text-xs: 13px;
+  --text-sm: 15px;
+  --text-base: 17px;
+  --text-lg: 19px;
+  --text-xl: 21px;
+  --text-2xl: 25px;
+
   --color-ink: #111111; /* main text, primary buttons */
   --color-ink-soft: #444444; /* body text */
   --color-fog: #f2f2f2; /* light grey tiles */

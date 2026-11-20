@@ -24,13 +24,13 @@ export default function HeatCategoryScreen({ data, category, today }: Props) {
   const counts = countLevels(items)
 
   return (
-    <div className="flex flex-col gap-4 px-5 pt-11 pb-4">
+    <div className="flex flex-col gap-4 px-5 pt-17 pb-4">
       <BackLink href={routeHref('heatmap')} label="Heat map" />
       <div className="flex flex-col gap-1">
-        <h1 tabIndex={-1} className="text-[28px] leading-[1.15] font-extrabold text-ink">
+        <h1 tabIndex={-1} className="text-[29px] leading-[1.15] font-extrabold text-ink">
           {CATEGORY_PLURALS[category]}
         </h1>
-        <p className="text-[15px] leading-[1.4] text-ink-soft">
+        <p className="text-[16px] leading-[1.4] text-ink-soft">
           {counts.cold} of {items.length} not worn in the last 30 days. Least worn first.
         </p>
       </div>

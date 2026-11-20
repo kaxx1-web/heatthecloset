@@ -21,15 +21,15 @@ export default function LoggedScreen({ data, log, today, day }: Props) {
   const pieces = log.pieceIds.map((id) => data.pieces.find((p) => p.id === id)).filter((p) => p !== undefined)
 
   return (
-    <div className="flex flex-1 flex-col gap-4 px-5 pt-[52px] pb-7">
+    <div className="flex flex-1 flex-col gap-4 px-5 pt-19 pb-7">
       <div className="flex flex-col items-center gap-3 pt-9 text-center">
         <div className="flex size-[72px] items-center justify-center rounded-full bg-ink">
           <img src={checkIcon} width={36} height={36} alt="" />
         </div>
-        <h1 tabIndex={-1} className="text-[28px] leading-[1.15] font-extrabold text-ink">
+        <h1 tabIndex={-1} className="text-[29px] leading-[1.15] font-extrabold text-ink">
           Outfit logged
         </h1>
-        <p className="text-[15px] leading-[1.4] text-ink-soft">
+        <p className="text-[16px] leading-[1.4] text-ink-soft">
           {pieces.length} {pieces.length === 1 ? 'piece' : 'pieces'} updated for {formatShortDate(today)}
         </p>
       </div>
@@ -41,8 +41,8 @@ export default function LoggedScreen({ data, log, today, day }: Props) {
               <GarmentIcon category={piece.category} name={piece.name} size={32} pieceId={piece.id} />
             </div>
             <div className="flex min-w-0 flex-1 flex-col leading-[1.4]">
-              <p className="text-[15px] font-bold text-ink">{piece.name}</p>
-              <p className="text-[13px] text-ink-soft">
+              <p className="text-[16px] font-bold text-ink">{piece.name}</p>
+              <p className="text-[14px] text-ink-soft">
                 Now worn {timesPhrase(timesWorn(data.logs, piece.id, CHALLENGE_DAYS, today))} in the
                 last 30 days
               </p>

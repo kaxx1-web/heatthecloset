@@ -37,7 +37,7 @@ export function BackLink({ href, label, historyBack = false }: { href: string; l
           window.history.back()
         }
       }}
-      className="-ml-1 flex h-11 shrink-0 items-center gap-1 self-start rounded-lg pr-2 pl-1 text-[15px] font-medium text-ink"
+      className="-ml-1 flex h-11 shrink-0 items-center gap-1 self-start rounded-lg pr-2 pl-1 text-[16px] font-medium text-ink"
     >
       <img src={chevronLeft} width={22} height={22} alt="" className="page-icon" />
       {label}
@@ -60,7 +60,7 @@ export function ConfirmHeader({
     <>
       <BackLink href={routeHref('photo')} label="Retake" />
       {showDots && <StepDots active={3} />}
-      <h1 tabIndex={-1} className="text-[28px] leading-[1.15] font-extrabold text-ink">
+      <h1 tabIndex={-1} className="text-[29px] leading-[1.15] font-extrabold text-ink">
         This is what you’re wearing
       </h1>
       <div className="flex items-center gap-3">
@@ -71,7 +71,7 @@ export function ConfirmHeader({
             <img src={photoPlaceholder} width={24} height={24} alt="" />
           )}
         </div>
-        <p className="flex-1 text-[15px] leading-[1.4] text-ink-soft">{note}</p>
+        <p className="flex-1 text-[16px] leading-[1.4] text-ink-soft">{note}</p>
       </div>
     </>
   )
@@ -83,7 +83,7 @@ export function DashedAddButton({ label, onClick }: { label: string; onClick: ()
     <button
       type="button"
       onClick={onClick}
-      className="flex h-12 shrink-0 items-center gap-2 rounded-[14px] border-[1.5px] border-dashed border-[#9a9a9a] px-3.5 text-[15px] font-semibold text-ink"
+      className="flex h-12 shrink-0 items-center gap-2 rounded-[14px] border-[1.5px] border-dashed border-[#9a9a9a] px-3.5 text-[16px] font-semibold text-ink"
     >
       <img src={plusIcon} width={20} height={20} alt="" className="page-icon" />
       {label}

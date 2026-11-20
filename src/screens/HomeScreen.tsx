@@ -34,11 +34,11 @@ export default function HomeScreen({ data, profile, today }: Props) {
   )
 
   return (
-    <div className="flex flex-col gap-[18px] px-5 pt-[52px] pb-4">
+    <div className="flex flex-col gap-[18px] px-5 pt-19 pb-4">
       <header className="flex items-start">
         <div className="flex flex-1 flex-col gap-0.5">
           <p className="text-sm leading-[1.4] text-ink-soft">{formatLongDate(today)}</p>
-          <h1 tabIndex={-1} className="text-[28px] leading-[1.15] font-extrabold text-ink">
+          <h1 tabIndex={-1} className="text-[29px] leading-[1.15] font-extrabold text-ink">
             Hello, {profile.name}.
           </h1>
         </div>
@@ -56,7 +56,7 @@ export default function HomeScreen({ data, profile, today }: Props) {
           className="surface flex min-h-[52px] items-center gap-3 rounded-[18px] border-[1.5px] border-[#e0e0e0] px-4 py-3 hover:bg-white"
         >
           <span className="flex-1 leading-[1.4]">
-            <span className="block text-[15px] font-bold text-ink">Today’s outfit is logged</span>
+            <span className="block text-[16px] font-bold text-ink">Today’s outfit is logged</span>
             <span className="block text-sm text-ink-soft">See what you wore today</span>
           </span>
           <span aria-hidden="true" className="text-xl text-[#9a9a9a]">

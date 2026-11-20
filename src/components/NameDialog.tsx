@@ -40,7 +40,7 @@ export default function NameDialog({ dialogRef, onSave }: Props) {
         <h2 id="name-dialog-title" className="text-2xl leading-[1.15] font-extrabold">
           What’s your first name?
         </h2>
-        <p className="text-[15px] leading-[1.4] text-ink-soft">
+        <p className="text-[16px] leading-[1.4] text-ink-soft">
           No password needed. Your name and logs stay on this phone.
         </p>
         <div className="flex flex-col gap-1">

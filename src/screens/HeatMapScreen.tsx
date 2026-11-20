@@ -41,8 +41,8 @@ export default function HeatMapScreen({ data, profile, today, onChange }: Props)
   if (day < CHALLENGE_DAYS) {
     const left = CHALLENGE_DAYS - day
     return (
-      <div className="flex flex-col gap-[18px] px-5 pt-[52px] pb-4">
-        <h1 tabIndex={-1} className="text-[28px] leading-[1.15] font-extrabold text-ink">
+      <div className="flex flex-col gap-[18px] px-5 pt-19 pb-4">
+        <h1 tabIndex={-1} className="text-[29px] leading-[1.15] font-extrabold text-ink">
           Heat map
         </h1>
         <div className="surface flex items-start gap-3 rounded-[18px] border-[1.5px] border-[#e0e0e0] p-4">
@@ -79,21 +79,21 @@ export default function HeatMapScreen({ data, profile, today, onChange }: Props)
   const notWorn = groups.reduce((sum, g) => sum + g.counts.cold, 0)
 
   return (
-    <div className="flex flex-col gap-4 px-5 pt-[52px] pb-4">
-      <h1 tabIndex={-1} className="text-[28px] leading-[1.15] font-extrabold text-ink">
+    <div className="flex flex-col gap-4 px-5 pt-19 pb-4">
+      <h1 tabIndex={-1} className="text-[29px] leading-[1.15] font-extrabold text-ink">
         Closet heat
       </h1>
       <div className="flex flex-col gap-0.5 leading-[1.4] text-ink-soft">
         <p className="text-base">
           {notWorn} of {data.pieces.length} pieces not worn in the last 30 days
         </p>
-        <p className="text-[13px]">Pieces show up here once you’ve logged or added them</p>
+        <p className="text-[14px]">Pieces show up here once you’ve logged or added them</p>
       </div>
 
       {/* Legend: a list, so screen readers say "list, 3 items". */}
       <ul className="flex flex-wrap gap-x-4 gap-y-1">
         {HEAT_ORDER.map((level) => (
-          <li key={level} className="flex items-center gap-1.5 text-[13px] leading-[1.4] text-ink">
+          <li key={level} className="flex items-center gap-1.5 text-[14px] leading-[1.4] text-ink">
             <span aria-hidden="true" className={`size-3.5 rounded border border-[#d9d9d9] ${HEAT[level].bg}`} />
             {HEAT[level].label}
           </li>
@@ -115,8 +115,8 @@ export default function HeatMapScreen({ data, profile, today, onChange }: Props)
                 <div className="flex items-center gap-2">
                   <GarmentIcon category={category} size={30} />
                   <div className="flex min-w-0 flex-1 flex-col leading-[1.4]">
-                    <span className="text-[15px] font-bold text-ink">{CATEGORY_PLURALS[category]}</span>
-                    <span className="text-[13px] text-ink-soft">
+                    <span className="text-[16px] font-bold text-ink">{CATEGORY_PLURALS[category]}</span>
+                    <span className="text-[14px] text-ink-soft">
                       {counts.cold} of {total} not worn
                     </span>
                   </div>

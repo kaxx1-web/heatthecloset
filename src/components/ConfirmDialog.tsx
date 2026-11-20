@@ -29,10 +29,10 @@ export default function ConfirmDialog({ dialogRef, title, message, confirmLabel,
       className="m-auto w-[calc(100%-32px)] max-w-[382px] rounded-2xl bg-white p-6 text-ink"
     >
       <div className="flex flex-col gap-4">
-        <h2 id={`${id}-title`} className="text-[22px] leading-[1.2] font-extrabold">
+        <h2 id={`${id}-title`} className="text-[23px] leading-[1.2] font-extrabold">
           {title}
         </h2>
-        <p id={`${id}-message`} className="text-[15px] leading-[1.4] text-ink-soft">
+        <p id={`${id}-message`} className="text-[16px] leading-[1.4] text-ink-soft">
           {message}
         </p>
         <button

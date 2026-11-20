@@ -47,7 +47,7 @@ function Ring({ percent }: { percent: number }) {
   )
 }
 
-const rowClass = 'flex h-[50px] w-full items-center gap-3 border-b border-[#ececec] text-[15px] leading-[1.4] text-ink'
+const rowClass = 'flex h-[50px] w-full items-center gap-3 border-b border-[#ececec] text-[16px] leading-[1.4] text-ink'
 
 // Figma: "16 Profile"
 export default function ProfileScreen({ data, profile, today, onLoadDemo, onReset }: Props) {
@@ -73,13 +73,13 @@ export default function ProfileScreen({ data, profile, today, onLoadDemo, onRese
   }
 
   return (
-    <div className="flex flex-col gap-3.5 px-5 pt-[52px] pb-4">
+    <div className="flex flex-col gap-3.5 px-5 pt-19 pb-4">
       <header className="flex items-center gap-3">
         <div className="flex size-[52px] shrink-0 items-center justify-center rounded-full bg-peach">
           <img src={avatarIcon} width={28} height={28} alt="" />
         </div>
         <div className="flex min-w-0 flex-1 flex-col">
-          <h1 tabIndex={-1} className="text-[26px] leading-[1.15] font-extrabold text-ink">
+          <h1 tabIndex={-1} className="text-[27px] leading-[1.15] font-extrabold text-ink">
             Your progress
           </h1>
           <p className="text-sm leading-[1.4] text-ink-soft">
@@ -90,21 +90,21 @@ export default function ProfileScreen({ data, profile, today, onLoadDemo, onRese
 
       <div className="flex gap-2">
         <div className="flex flex-1 flex-col rounded-2xl bg-apricot p-3.5 text-ink">
-          <p className="text-[26px] leading-[1.15] font-bold">{rediscovered.length}</p>
-          <p className="text-[13px] leading-[1.4]">forgotten {rediscovered.length === 1 ? 'piece' : 'pieces'} worn again</p>
+          <p className="text-[27px] leading-[1.15] font-bold">{rediscovered.length}</p>
+          <p className="text-[14px] leading-[1.4]">forgotten {rediscovered.length === 1 ? 'piece' : 'pieces'} worn again</p>
         </div>
         <div className="flex flex-1 flex-col rounded-2xl bg-fog p-3.5">
-          <p className="text-[26px] leading-[1.15] font-bold text-ink">
+          <p className="text-[27px] leading-[1.15] font-bold text-ink">
             {daysLogged} of {CHALLENGE_DAYS}
           </p>
-          <p className="text-[13px] leading-[1.4] text-ink-soft">days logged</p>
+          <p className="text-[14px] leading-[1.4] text-ink-soft">days logged</p>
         </div>
       </div>
 
       <div className="surface flex items-center gap-4 rounded-2xl border-[1.5px] border-[#e0e0e0] p-3.5">
         <Ring percent={percent} />
         <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-          <p className="text-[26px] leading-[1.15] font-bold text-ink">{percent}%</p>
+          <p className="text-[27px] leading-[1.15] font-bold text-ink">{percent}%</p>
           <p className="text-sm leading-[1.4] text-ink-soft">
             of your logged pieces worn in the last 30 days ({wornCount} of {total})
           </p>
@@ -127,7 +127,7 @@ export default function ProfileScreen({ data, profile, today, onLoadDemo, onRese
                   <div className="flex h-[62px] items-center justify-center rounded-xl bg-peach">
                     <GarmentIcon category={piece.category} name={piece.name} size={32} pieceId={piece.id} />
                   </div>
-                  <span className="text-[13px] leading-[1.4] font-bold text-ink">{piece.name}</span>
+                  <span className="text-[14px] leading-[1.4] font-bold text-ink">{piece.name}</span>
                   <span className="text-xs leading-[1.4] text-ink-soft">worn again {formatShortDate(date)}</span>
                 </a>
               </li>
@@ -141,18 +141,18 @@ export default function ProfileScreen({ data, profile, today, onLoadDemo, onRese
         <div className={rowClass}>
           <img src={imageIcon} width={22} height={22} alt="" />
           <span className="flex-1">Upload photos</span>
-          <span className="text-[13px] text-[#595959]">Coming soon</span>
+          <span className="text-[14px] text-[#595959]">Coming soon</span>
         </div>
         <div className={rowClass}>
           <img src={bellIcon} width={22} height={22} alt="" />
           <span className="flex-1">Reminders</span>
-          <span className="text-[13px] text-[#595959]">Coming soon</span>
+          <span className="text-[14px] text-[#595959]">Coming soon</span>
         </div>
 
         {/* <details> is a built-in show/hide: the summary row toggles it,
             and the chevron turns when it's open (group-open:rotate-90). */}
         <details className="group border-b border-[#ececec]">
-          <summary className="flex h-[50px] cursor-pointer list-none items-center gap-3 text-[15px] leading-[1.4] text-ink [&::-webkit-details-marker]:hidden">
+          <summary className="flex h-[50px] cursor-pointer list-none items-center gap-3 text-[16px] leading-[1.4] text-ink [&::-webkit-details-marker]:hidden">
             <span aria-hidden="true" className="size-[22px]" />
             <span className="flex-1">Demo mode</span>
             <img src={chevronRight} width={20} height={20} alt="" className="transition-transform group-open:rotate-90" />
@@ -184,7 +184,7 @@ export default function ProfileScreen({ data, profile, today, onLoadDemo, onRese
         </button>
       </section>
 
-      <p className="text-[13px] leading-[1.4] text-ink-soft">
+      <p className="text-[14px] leading-[1.4] text-ink-soft">
         Your name, logs and piece photos are stored only in this browser and never uploaded. Daily outfit photos are never saved.
       </p>
 

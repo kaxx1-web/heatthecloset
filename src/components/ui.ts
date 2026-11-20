@@ -8,5 +8,13 @@ export const secondaryButton =
 export const onboardingPrimary =
   'flex h-[52px] w-full shrink-0 items-center justify-center rounded-[14px] bg-ink text-base font-bold text-white hover:bg-stone-700'
 
+// Smaller versions for the sign-up buttons on the welcome screen
+// (46px tall, 15px text), so that screen feels less oversized.
+export const signupPrimary =
+  'flex h-[46px] w-full shrink-0 items-center justify-center rounded-xl bg-ink text-[15px] font-bold text-white hover:bg-stone-700'
+
+export const signupOutline =
+  'flex h-[46px] w-full shrink-0 items-center justify-center rounded-xl border-[1.5px] border-ink bg-white text-[15px] font-bold text-ink hover:bg-fog'
+
 export const onboardingOutline =
   'flex h-[52px] w-full shrink-0 items-center justify-center rounded-[14px] border-[1.5px] border-ink bg-white text-base font-bold text-ink hover:bg-fog'

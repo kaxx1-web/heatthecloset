@@ -56,7 +56,7 @@ export default function AddPieceSheet({ dialogRef, existingNames, onAdd }: Props
         </div>
 
         <div className="flex items-center">
-          <h2 id="add-piece-title" className="flex-1 text-[22px] leading-[1.4] font-extrabold">
+          <h2 id="add-piece-title" className="flex-1 text-[23px] leading-[1.4] font-extrabold">
             Add a new piece
           </h2>
           <button

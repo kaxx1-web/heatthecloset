@@ -22,10 +22,10 @@ const STEPS = [
 
 export default function HowItWorksScreen() {
   return (
-    <div className="flex flex-1 flex-col gap-4 px-6 pt-11 pb-7">
+    <div className="flex flex-1 flex-col gap-4 px-6 pt-17 pb-7">
       <BackLink href={routeHref('welcome')} label="Back" />
       <StepDots active={0} />
-      <h1 tabIndex={-1} className="text-[30px] leading-[1.15] font-extrabold text-ink">
+      <h1 tabIndex={-1} className="text-[31px] leading-[1.15] font-extrabold text-ink">
         How it works
       </h1>
 
@@ -36,8 +36,8 @@ export default function HowItWorksScreen() {
               <img src={icon} width={26} height={26} alt="" />
             </div>
             <div className="flex flex-1 flex-col gap-[3px] leading-[1.4]">
-              <h2 className="text-[17px] font-bold text-ink">{title}</h2>
-              <p className="text-[15px] text-ink-soft">{text}</p>
+              <h2 className="text-[18px] font-bold text-ink">{title}</h2>
+              <p className="text-[16px] text-ink-soft">{text}</p>
             </div>
           </li>
         ))}

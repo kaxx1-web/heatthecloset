@@ -117,7 +117,7 @@ export default function PhotoScreen({ day, firstDay, onPhoto }: Props) {
   const shutterLabel = mode === 'live' ? 'Take photo' : 'Open camera'
 
   return (
-    <div data-dark-screen className="flex flex-1 flex-col gap-4 bg-night px-6 pt-[52px] pb-6">
+    <div data-dark-screen className="flex flex-1 flex-col gap-4 bg-night px-6 pt-19 pb-6">
       <div className="flex items-center justify-between">
         {firstDay ? <StepDots active={2} dark /> : <span />}
         <p className="text-sm leading-[1.4] font-semibold text-ash">
@@ -125,10 +125,10 @@ export default function PhotoScreen({ day, firstDay, onPhoto }: Props) {
         </p>
       </div>
 
-      <h1 tabIndex={-1} className="text-[28px] leading-[1.15] font-extrabold text-paper">
+      <h1 tabIndex={-1} className="text-[29px] leading-[1.15] font-extrabold text-paper">
         Take a photo of your outfit right now
       </h1>
-      <p className="text-[15px] leading-[1.4] text-ash">
+      <p className="text-[16px] leading-[1.4] text-ash">
         {firstDay ? 'Mirror selfies work. This starts your 30 days.' : 'Mirror selfies work.'}
       </p>
 
@@ -155,7 +155,7 @@ export default function PhotoScreen({ day, firstDay, onPhoto }: Props) {
             </button>
           </>
         ) : mode === 'error' ? (
-          <p role="alert" className="max-w-[260px] text-center text-[15px] leading-[1.4] text-paper">
+          <p role="alert" className="max-w-[260px] text-center text-[16px] leading-[1.4] text-paper">
             We couldn’t open your camera. Check that this site is allowed to use it, or upload a
             photo instead.
           </p>
@@ -163,7 +163,7 @@ export default function PhotoScreen({ day, firstDay, onPhoto }: Props) {
           <>
             <img src={figureIcon} width={150} height={285} alt="" />
             {mode === 'starting' && (
-              <p role="status" className="absolute bottom-4 text-[15px] text-ash">
+              <p role="status" className="absolute bottom-4 text-[16px] text-ash">
                 Starting camera…
               </p>
             )}
@@ -187,14 +187,14 @@ export default function PhotoScreen({ day, firstDay, onPhoto }: Props) {
 
       {/* Upload: a <label> for a hidden file input. With no `capture`
           attribute, phones offer the photo library (and the camera too). */}
-      <label className="flex h-11 cursor-pointer items-center justify-center rounded-[14px] text-[15px] font-semibold text-paper underline underline-offset-4 has-focus-visible:outline-3 has-focus-visible:outline-offset-2 has-focus-visible:outline-blue-400">
+      <label className="flex h-11 cursor-pointer items-center justify-center rounded-[14px] text-[16px] font-semibold text-paper underline underline-offset-4 has-focus-visible:outline-3 has-focus-visible:outline-offset-2 has-focus-visible:outline-blue-400">
         Upload a photo instead
         <input type="file" accept="image/*" onChange={handleUpload} className="sr-only" />
       </label>
 
       <a
         href={routeHref('home')}
-        className="flex h-11 items-center justify-center rounded-[14px] text-[15px] font-semibold text-paper"
+        className="flex h-11 items-center justify-center rounded-[14px] text-[16px] font-semibold text-paper"
       >
         Not dressed yet? Remind me later
       </a>
