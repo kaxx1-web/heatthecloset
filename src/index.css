@@ -336,6 +336,10 @@ dialog::backdrop {
       height: 100%;
       border-radius: 64px;
       overflow: hidden;
+      /* Same rounded clip again as a clip-path: Chrome doesn't clip the
+         frosted tab bar's backdrop-filter to the rounded corners, so the
+         page behind it showed through on the bezel. clip-path clips it. */
+      clip-path: inset(0 round 64px);
       contain: layout paint;
       background: var(--color-espresso);
     }
@@ -398,8 +402,7 @@ dialog::backdrop {
       gap: 6px;
     }
 
-    /* The home indicator bar. "difference" blending turns it dark over the
-       white tab bar and light over the dark background. */
+    /* The home indicator bar: white over the dark app, like iOS. */
     .device__home-indicator {
       display: block;
       position: absolute;
@@ -411,8 +414,12 @@ dialog::backdrop {
       margin-left: -75px;
       border-radius: 3px;
       background: white;
-      mix-blend-mode: difference;
       pointer-events: none;
+    }
+    /* Dark instead when the screen has the light tab bar at the bottom
+       (Home, Heat map, Profile). */
+    .device__screen:has(nav[aria-label="Main"]) .device__home-indicator {
+      background: #111111;
     }
 
     /* Side buttons, sticking out 3px from the frame. */
